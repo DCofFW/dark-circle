@@ -1,0 +1,1733 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE DARK CIRCLE OF THE FULL KEEPERS — Тёмный Круг Хранителей Фулла</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;800&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        display: ['"Cinzel Decorative"', 'serif'],
+                        cinzel: ['"Cinzel"', 'serif'],
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        mono: ['"JetBrains Mono"', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --bg-obsidian: #040407;
+            --bg-panel: rgba(11, 11, 18, 0.78);
+            --theme-primary: #d4af37;
+            --theme-secondary: #991b1b;
+            --theme-glow: rgba(212, 175, 55, 0.45);
+            --theme-accent-rgb: 212, 175, 55;
+            --theme-sub-rgb: 185, 28, 28;
+        }
+
+        /* Theme Override States for the Triumvirate */
+        body[data-dominus="nox"] {
+            --theme-primary: #c084fc;
+            --theme-secondary: #581c87;
+            --theme-glow: rgba(168, 85, 247, 0.55);
+            --theme-accent-rgb: 192, 132, 252;
+            --theme-sub-rgb: 88, 28, 135;
+        }
+
+        body[data-dominus="silentii"] {
+            --theme-primary: #38bdf8;
+            --theme-secondary: #334155;
+            --theme-glow: rgba(56, 189, 248, 0.5);
+            --theme-accent-rgb: 56, 189, 248;
+            --theme-sub-rgb: 148, 163, 184;
+        }
+
+        body[data-dominus="vitae"] {
+            --theme-primary: #f59e0b;
+            --theme-secondary: #dc2626;
+            --theme-glow: rgba(245, 158, 11, 0.6);
+            --theme-accent-rgb: 245, 158, 11;
+            --theme-sub-rgb: 220, 38, 38;
+        }
+
+        * {
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            background-color: var(--bg-obsidian);
+            color: #e2e8f0;
+            font-family: 'Cormorant Garamond', serif;
+            overflow-x: hidden;
+            transition: background-color 0.8s ease;
+        }
+
+        @media (pointer: fine) {
+            body, a, button, input, select, textarea {
+                cursor: none !important;
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #040407;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--theme-primary);
+            border-radius: 3px;
+        }
+
+        /* Dynamic Theme Utilities */
+        .theme-text {
+            color: var(--theme-primary);
+            transition: color 0.5s ease;
+        }
+        .theme-border {
+            border-color: rgba(var(--theme-accent-rgb), 0.35);
+            transition: border-color 0.5s ease, box-shadow 0.5s ease;
+        }
+        .theme-glow-box {
+            box-shadow: 0 0 35px -5px var(--theme-glow), inset 0 0 20px -10px var(--theme-glow);
+            transition: box-shadow 0.5s ease;
+        }
+
+        /* Metallic Gradient Text */
+        .metallic-title {
+            background: linear-gradient(180deg, #ffffff 0%, var(--theme-primary) 55%, #5c4813 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 4px 20px var(--theme-glow));
+            transition: filter 0.5s ease;
+        }
+
+        /* Rotation & Sacred Geometry Animations */
+        @keyframes spin-slow {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @keyframes spin-reverse-slow {
+            0% { transform: rotate(360deg); }
+            100% { transform: rotate(0deg); }
+        }
+        @keyframes pulse-aura {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 0.85; transform: scale(1.06); }
+        }
+        @keyframes float-ethereal {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-12px) rotate(1deg); }
+        }
+        @keyframes glitch-shake {
+            0% { transform: translate(0); }
+            20% { transform: translate(-6px, 4px) skewX(3deg); filter: hue-rotate(90deg); }
+            40% { transform: translate(6px, -4px) skewX(-3deg); }
+            60% { transform: translate(-4px, -2px); filter: invert(0.2); }
+            80% { transform: translate(4px, 3px); }
+            100% { transform: translate(0); }
+        }
+
+        .animate-spin-slow {
+            animation: spin-slow 42s linear infinite;
+            transform-origin: center center;
+        }
+        .animate-spin-reverse {
+            animation: spin-reverse-slow 32s linear infinite;
+            transform-origin: center center;
+        }
+        .animate-spin-fast {
+            animation: spin-slow 6s linear infinite !important;
+            transform-origin: center center;
+        }
+        .animate-pulse-aura {
+            animation: pulse-aura 4s ease-in-out infinite;
+        }
+        .animate-float {
+            animation: float-ethereal 6s ease-in-out infinite;
+        }
+        .screen-shake {
+            animation: glitch-shake 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+        }
+
+        /* Custom Runic Cursor */
+        #cursor-dot {
+            position: fixed;
+            top: 0; left: 0;
+            width: 8px; height: 8px;
+            background: var(--theme-primary);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 12px 2px var(--theme-primary);
+            transition: width 0.2s, height 0.2s, background-color 0.4s;
+        }
+        #cursor-ring {
+            position: fixed;
+            top: 0; left: 0;
+            width: 48px; height: 48px;
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: width 0.25s cubic-bezier(0.16, 1, 0.3, 1), height 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s;
+        }
+        body.cursor-hover #cursor-ring {
+            width: 74px;
+            height: 74px;
+            filter: drop-shadow(0 0 10px var(--theme-primary));
+        }
+        body.cursor-hover #cursor-dot {
+            width: 12px;
+            height: 12px;
+            background: #fff;
+        }
+
+        /* Monolith Cards in Triumvirate */
+        .monolith-card {
+            position: relative;
+            background: linear-gradient(180deg, rgba(15, 15, 25, 0.9) 0%, rgba(5, 5, 10, 0.96) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow: hidden;
+        }
+        .monolith-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 25%, var(--monolith-color, rgba(212,175,55,0.18)), transparent 70%);
+            opacity: 0.4;
+            transition: opacity 0.6s ease;
+            pointer-events: none;
+        }
+        .monolith-card:hover::before,
+        .monolith-card.active-monolith::before {
+            opacity: 1;
+        }
+
+        /* Molten Cracks Effect on Codex Tablets */
+        .codex-tablet {
+            position: relative;
+            background: linear-gradient(135deg, rgba(16, 16, 24, 0.85) 0%, rgba(7, 7, 12, 0.95) 100%);
+            border: 1px solid rgba(var(--theme-accent-rgb), 0.2);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow: hidden;
+        }
+        .codex-tablet:hover, .codex-tablet.tablet-ignited {
+            border-color: var(--theme-primary);
+            box-shadow: 0 0 30px -5px var(--theme-glow), inset 0 0 25px -12px var(--theme-glow);
+            transform: translateY(-4px);
+        }
+        .tablet-crack {
+            stroke-dasharray: 300;
+            stroke-dashoffset: 300;
+            transition: stroke-dashoffset 0.9s ease-out;
+        }
+        .codex-tablet:hover .tablet-crack,
+        .codex-tablet.tablet-ignited .tablet-crack {
+            stroke-dashoffset: 0;
+        }
+
+        /* Ritual Vignette when holding summon button */
+        #ritual-vignette {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 45;
+            background: radial-gradient(circle at center, transparent 35%, rgba(var(--theme-accent-rgb), 0.45) 95%);
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        /* Noise & Scanline Overlay */
+        .mystic-overlay {
+            background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 0);
+            background-size: 24px 24px;
+        }
+    </style>
+</head>
+<body class="selection:bg-amber-500/30 selection:text-amber-200">
+
+    <!-- CUSTOM RUNIC CURSOR (Hidden on touch devices) -->
+    <div id="cursor-dot" class="hidden md:block"></div>
+    <div id="cursor-ring" class="hidden md:block">
+        <svg viewBox="0 0 100 100" class="w-full h-full animate-spin-slow">
+            <circle cx="50" cy="50" r="44" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="6 4" class="theme-text opacity-70"/>
+            <polygon points="50,4 94,75 6,75" fill="none" stroke="currentColor" stroke-width="0.8" class="theme-text opacity-40"/>
+            <polygon points="50,96 94,25 6,25" fill="none" stroke="currentColor" stroke-width="0.8" class="theme-text opacity-40"/>
+            <circle cx="50" cy="6" r="2.5" fill="currentColor" class="theme-text"/>
+            <circle cx="50" cy="94" r="2.5" fill="currentColor" class="theme-text"/>
+        </svg>
+    </div>
+
+    <!-- RITUAL VIGNETTE OVERLAY -->
+    <div id="ritual-vignette"></div>
+
+    <!-- FULLSCREEN INTERACTIVE PARTICLE ENGINE CANVAS -->
+    <canvas id="abyss-canvas" class="fixed inset-0 w-full h-full pointer-events-none z-0"></canvas>
+
+    <!-- ==========================================
+         1. GATE OF INITIATION (PRELOADER OVERLAY)
+         ========================================== -->
+    <div id="initiation-gate" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#030305] px-4 transition-all duration-1000">
+        <!-- Ambient Radial Glow -->
+        <div class="absolute w-[340px] h-[340px] md:w-[540px] md:h-[540px] rounded-full bg-amber-500/10 blur-[110px] pointer-events-none animate-pulse-aura"></div>
+
+        <!-- Multi-layered Sacred Seal of the Dark Circle -->
+        <div id="gate-seal-container" class="relative w-64 h-64 md:w-80 md:h-80 flex items-center justify-center mb-8 transition-transform duration-700">
+            <!-- Outer Rotating Runic Ring -->
+            <svg viewBox="0 0 300 300" class="absolute inset-0 w-full h-full animate-spin-slow text-amber-500/70">
+                <defs>
+                    <path id="gateRunePath" d="M 150, 150 m -126, 0 a 126,126 0 1,1 252,0 a 126,126 0 1,1 -252,0" />
+                </defs>
+                <circle cx="150" cy="150" r="142" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="4 6"/>
+                <circle cx="150" cy="150" r="118" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                <text font-family="Cinzel" font-size="9.5" fill="currentColor" letter-spacing="5.5">
+                    <textPath href="#gateRunePath">
+                        ✢ ORDO CUSTODUM PLENITUDINIS ✢ DOMINUS NOX ✢ DOMINUS SILENTII ✢ DOMINUS VITAE 
+                    </textPath>
+                </text>
+            </svg>
+
+            <!-- Counter-Rotating Sacred Octagram -->
+            <svg viewBox="0 0 300 300" class="absolute inset-0 w-full h-full animate-spin-reverse text-red-700/70">
+                <rect x="68" y="68" width="164" height="164" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                <rect x="68" y="68" width="164" height="164" fill="none" stroke="currentColor" stroke-width="1.5" transform="rotate(45 150 150)"/>
+                <circle cx="150" cy="150" r="82" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="10 5"/>
+            </svg>
+
+            <!-- Central Eye of the Full -->
+            <svg viewBox="0 0 200 200" class="relative w-36 h-36 text-amber-400 drop-shadow-[0_0_20px_rgba(212,175,55,0.6)]">
+                <polygon points="100,22 174,150 26,150" fill="rgba(10,10,16,0.9)" stroke="currentColor" stroke-width="2.5"/>
+                <polygon points="100,178 174,50 26,50" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="4 4"/>
+                <!-- All-Seeing Eye -->
+                <path d="M52,105 Q100,65 148,105 Q100,145 52,105 Z" fill="#050508" stroke="currentColor" stroke-width="2.5"/>
+                <circle cx="100" cy="105" r="16" fill="none" stroke="#ef4444" stroke-width="2" class="animate-pulse"/>
+                <circle cx="100" cy="105" r="7" fill="#fbbf24"/>
+            </svg>
+        </div>
+
+        <!-- Gate Typography -->
+        <p class="font-mono text-xs md:text-sm uppercase tracking-[0.35em] text-amber-500/80 mb-2 text-center">
+            [ ТАЙНЫЙ АРХИВ ЗАПЕЧАТАН ПЕЧАТЬЮ ТРИУМВИРАТА ]
+        </p>
+        <h1 class="font-display text-2xl sm:text-4xl md:text-5xl text-center tracking-wider metallic-title mb-4">
+            ORDO CUSTODUM PLENITUDINIS
+        </h1>
+        <p class="text-slate-400 text-lg md:text-xl max-w-xl text-center italic mb-8">
+            «Ни один шакальный кадр не укроется во тьме. Ни один просящий в комментариях не уйдёт без первоисточника.»
+        </p>
+
+        <!-- Initiation Action Button -->
+        <button id="btn-initiate" class="group relative px-10 py-4 bg-black/80 border border-amber-500/60 rounded-lg overflow-hidden transition-all duration-500 hover:border-amber-300 hover:shadow-[0_0_40px_rgba(212,175,55,0.5)]">
+            <span class="absolute inset-0 bg-gradient-to-r from-red-950/60 via-amber-600/25 to-red-950/60 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></span>
+            <span class="relative flex items-center gap-3 font-cinzel font-bold tracking-[0.25em] text-amber-300 text-sm md:text-base">
+                <svg class="w-5 h-5 text-amber-400 animate-spin-slow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9L12 2Z"/>
+                </svg>
+                ПРОЙТИ ИНИЦИАЦИЮ
+                <svg class="w-5 h-5 text-amber-400 animate-spin-slow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9L12 2Z"/>
+                </svg>
+            </span>
+        </button>
+        <span class="mt-4 font-mono text-[11px] text-slate-600 tracking-widest uppercase">
+            Рекомендуется включить звук для полного погружения в святилище
+        </span>
+    </div>
+
+    <!-- ==========================================
+         2. STICKY NAVIGATION & AURA CONTROLLER
+         ========================================== -->
+    <header class="fixed top-0 left-0 right-0 z-40 backdrop-blur-md bg-[#040407]/80 border-b theme-border transition-colors duration-500">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Brand Crest -->
+            <a href="#sanctum" class="flex items-center gap-3 group">
+                <div class="w-11 h-11 rounded-full border theme-border flex items-center justify-center bg-black/60 group-hover:scale-105 transition-transform">
+                    <svg viewBox="0 0 60 60" class="w-8 h-8 theme-text">
+                        <polygon points="30,6 54,48 6,48" fill="none" stroke="currentColor" stroke-width="2"/>
+                        <circle cx="30" cy="34" r="7" fill="none" stroke="currentColor" stroke-width="2"/>
+                        <circle cx="30" cy="34" r="2.5" fill="currentColor"/>
+                    </svg>
+                </div>
+                <div>
+                    <span class="block font-display text-sm sm:text-base tracking-widest text-white group-hover:text-amber-300 transition-colors">
+                        DARK CIRCLE
+                    </span>
+                    <span class="block font-mono text-[10px] tracking-[0.25em] theme-text uppercase">
+                        Хранители Фулла
+                    </span>
+                </div>
+            </a>
+
+            <!-- Navigation Links -->
+            <nav class="hidden lg:flex items-center gap-8 font-cinzel text-xs tracking-[0.2em] uppercase text-slate-300">
+                <a href="#altar" class="hover:text-white transition-colors py-2">Алтарь Поиска</a>
+                <a href="#triumvirate" class="hover:text-white transition-colors py-2">Триумвират Владык</a>
+                <a href="#codex" class="hover:text-white transition-colors py-2">Кодекс Ордена</a>
+                <a href="#summon" class="hover:text-white transition-colors py-2">Ритуал Призыва</a>
+            </nav>
+
+            <!-- Active Aura Indicator & Sound Toggle -->
+            <div class="flex items-center gap-3">
+                <div id="active-aura-badge" class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/70 border theme-border text-xs font-mono">
+                    <span class="w-2 h-2 rounded-full animate-ping" style="background-color: var(--theme-primary)"></span>
+                    <span id="aura-label" class="theme-text uppercase tracking-wider">Аура: Канон Круга</span>
+                </div>
+
+                <button id="btn-audio-toggle" title="Звуковой резонанс Святилища" class="p-2.5 rounded-lg bg-black/70 border theme-border theme-text hover:bg-white/5 transition-all">
+                    <svg id="icon-sound-on" class="w-5 h-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/>
+                    </svg>
+                    <svg id="icon-sound-off" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==========================================
+         3. HERO SANCTUM & SACRED EMBLEM OF THE CIRCLE
+         ========================================== -->
+    <main id="sanctum" class="relative z-10 pt-28 pb-20 mystic-overlay">
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center">
+            
+            <!-- Interactive 3D-Tilt Sacred Seal of the Dark Circle -->
+            <div id="hero-emblem-wrapper" class="relative w-72 h-72 sm:w-96 sm:h-96 flex items-center justify-center my-4 select-none">
+                <!-- Dynamic Background Glow -->
+                <div class="absolute inset-6 rounded-full blur-3xl opacity-40 animate-pulse-aura pointer-events-none" style="background: radial-gradient(circle, var(--theme-primary), transparent 70%);"></div>
+
+                <!-- Ring 1: Outer Runic Inscription -->
+                <svg id="altar-ring-outer" viewBox="0 0 400 400" class="absolute inset-0 w-full h-full animate-spin-slow theme-text opacity-85">
+                    <defs>
+                        <path id="heroRuneCircle" d="M 200, 200 m -172, 0 a 172,172 0 1,1 344,0 a 172,172 0 1,1 -344,0" />
+                    </defs>
+                    <circle cx="200" cy="200" r="190" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="3 8"/>
+                    <circle cx="200" cy="200" r="182" fill="none" stroke="currentColor" stroke-width="1.5" stroke-opacity="0.5"/>
+                    <circle cx="200" cy="200" r="160" fill="none" stroke="currentColor" stroke-width="1.2"/>
+                    <text font-family="Cinzel" font-size="11" fill="currentColor" letter-spacing="6.2">
+                        <textPath href="#heroRuneCircle">
+                            • THE DARK CIRCLE OF THE FULL KEEPERS • НИ ОДИН ПРОСЯЩИЙ ДА НЕ УЙДЁТ БЕЗ ССЫЛКИ 
+                        </textPath>
+                    </text>
+                </svg>
+
+                <!-- Ring 2: Counter-Rotating Sacred Geometry Triquetra/Hexagram -->
+                <svg id="altar-ring-mid" viewBox="0 0 400 400" class="absolute inset-0 w-full h-full animate-spin-reverse theme-text opacity-65">
+                    <polygon points="200,45 334,277 66,277" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                    <polygon points="200,355 334,123 66,123" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                    <circle cx="200" cy="45" r="5" fill="currentColor"/>
+                    <circle cx="334" cy="277" r="5" fill="currentColor"/>
+                    <circle cx="66" cy="277" r="5" fill="currentColor"/>
+                    <circle cx="200" cy="200" r="112" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="12 6"/>
+                </svg>
+
+                <!-- Ring 3: Inner Core — The All-Seeing Eye of the Full & Three Crowns of the Dominuses -->
+                <svg id="altar-core" viewBox="0 0 240 240" class="relative w-44 h-44 sm:w-56 sm:h-56 theme-text transition-transform duration-300">
+                    <!-- Obsidian Shield -->
+                    <circle cx="120" cy="120" r="78" fill="#06060b" stroke="currentColor" stroke-width="2.5"/>
+                    <!-- 3 Nodes representing Nox, Silentii, Vitae -->
+                    <line x1="120" y1="42" x2="120" y2="198" stroke="currentColor" stroke-width="0.6" stroke-opacity="0.4"/>
+                    <line x1="42" y1="120" x2="198" y2="120" stroke="currentColor" stroke-width="0.6" stroke-opacity="0.4"/>
+                    <!-- Mystic Eye of the Source -->
+                    <path d="M58,120 Q120,68 182,120 Q120,172 58,120 Z" fill="#0b0b14" stroke="currentColor" stroke-width="3"/>
+                    <circle cx="120" cy="120" r="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/>
+                    <circle id="core-iris" cx="120" cy="120" r="11" fill="currentColor" class=" transition-all duration-300"/>
+                    <circle cx="124" cy="116" r="3" fill="#ffffff"/>
+                </svg>
+            </div>
+
+            <!-- Subtitle Tag -->
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/[0.03] border theme-border mb-5">
+                <span class="font-mono text-xs uppercase tracking-[0.3em] theme-text">
+                    ❖ Высший Орден Искателей Первоисточника ❖
+                </span>
+            </div>
+
+            <!-- Main Epic Title -->
+            <h1 class="font-display text-3xl sm:text-5xl md:text-6xl lg:text-7xl tracking-wider uppercase metallic-title max-w-5xl leading-tight mb-4">
+                THE DARK CIRCLE OF THE FULL KEEPERS
+            </h1>
+            <h2 class="font-cinzel text-lg sm:text-2xl md:text-3xl tracking-[0.25em] text-slate-300 uppercase mb-6">
+                Тёмный Круг Хранителей Фулла
+            </h2>
+
+            <p class="max-w-3xl text-lg sm:text-xl md:text-2xl text-slate-300/90 leading-relaxed italic mb-10">
+                Там, где обрываются видео на самом интересном месте, где скриншоты сжаты до десяти шакалов, а авторы постов хранят предательское молчание — восстаёт <span class="theme-text font-semibold not-italic">Тёмный Круг</span> под властью Трёх Доминусов.
+            </p>
+
+            <!-- ==========================================
+                 4. THE ALTAR OF SEARCH (АЛТАРЬ ПОИСКА)
+                 ========================================== -->
+            <div id="altar" class="w-full max-w-4xl mt-4 scroll-mt-28">
+                <div class="relative rounded-2xl bg-[#090910]/90 border theme-border p-6 sm:p-8 md:p-10 theme-glow-box backdrop-blur-xl">
+                    <!-- Corner Decorative Runes -->
+                    <span class="absolute top-3 left-4 font-mono text-xs theme-text opacity-50">╔═ ALTARIUM QUERELAE</span>
+                    <span class="absolute top-3 right-4 font-mono text-xs theme-text opacity-50">VER. IV.K.LX ═╗</span>
+
+                    <h3 class="font-cinzel text-xl sm:text-2xl tracking-[0.2em] uppercase text-white mb-2">
+                        Алтарь Истинного Поиска
+                    </h3>
+                    <p class="text-slate-400 text-base sm:text-lg mb-6">
+                        Введи приметы утраченного Фулла, описание кадра или проклятие обрезавшему видео — и руны Круга начнут дешифровку Бездны.
+                    </p>
+
+                    <!-- Search Input & Button -->
+                    <div class="flex flex-col sm:flex-row gap-3 mb-5">
+                        <div class="relative flex-1">
+                            <input 
+                                id="full-search-input" 
+                                type="text" 
+                                placeholder="Например: Тот самый ролик из 2011 по одному размытому кадру..."
+                                class="w-full px-5 py-4 rounded-xl bg-black/80 border theme-border text-white placeholder-slate-500 font-serif text-lg focus:outline-none focus:border-amber-400 transition-all"
+                            />
+                            <span id="rune-energy-counter" class="absolute right-4 top-1/2 -translate-y-1/2 font-mono text-xs theme-text opacity-70">
+                                РУНЫ: ПОКОЙ
+                            </span>
+                        </div>
+                        <button id="btn-search-ritual" class="px-8 py-4 rounded-xl font-cinzel font-bold text-sm tracking-[0.2em] uppercase bg-gradient-to-r from-amber-600/30 via-red-900/50 to-amber-600/30 border theme-border text-white hover:scale-[1.02] active:scale-95 transition-all shadow-lg">
+                            Воззвать к Архивам
+                        </button>
+                    </div>
+
+                    <!-- Quick Relic Preset Pills -->
+                    <div class="flex flex-wrap items-center justify-center gap-2 text-xs font-mono">
+                        <span class="text-slate-500 mr-1">Древние метки:</span>
+                        <button type="button" class="preset-query px-3 py-1.5 rounded-lg bg-white/[0.04] hover:bg-white/10 border border-white/10 text-slate-300 transition-colors" data-query="Шакальный скриншот 144p в 3 часа ночи без единой ссылки">
+                            [144p в 3:00 ночи]
+                        </button>
+                        <button type="button" class="preset-query px-3 py-1.5 rounded-lg bg-white/[0.04] hover:bg-white/10 border border-white/10 text-slate-300 transition-colors" data-query="Видео обрывается за секунду до финала, в комментариях 400 человек ждут бригаду">
+                            [Обрезанный финал]
+                        </button>
+                        <button type="button" class="preset-query px-3 py-1.5 rounded-lg bg-white/[0.04] hover:bg-white/10 border border-white/10 text-slate-300 transition-colors" data-query="Удалённый первоисточник из закрытого архива Эпохи Древнего Рунета">
+                            [Утраченный Архив 2007]
+                        </button>
+                        <button type="button" class="preset-query px-3 py-1.5 rounded-lg bg-white/[0.04] hover:bg-white/10 border border-white/10 text-slate-300 transition-colors" data-query="Восстановление в первозданном 4K 60FPS без вотермарок">
+                            [Абсолютный 4K Ремастер]
+                        </button>
+                    </div>
+
+                    <!-- Dynamic Ritual Search Output Panel -->
+                    <div id="search-ritual-output" class="hidden mt-6 pt-6 border-t border-white/10 text-left">
+                        <div class="flex items-center justify-between font-mono text-xs theme-text mb-2">
+                            <span id="ritual-stage-text">СКАНИРОВАНИЕ АСТРАЛЬНЫХ СЛОЁВ СЕТИ...</span>
+                            <span id="ritual-percent">0%</span>
+                        </div>
+                        <div class="w-full h-1.5 bg-black rounded-full overflow-hidden mb-5 border border-white/10">
+                            <div id="ritual-progress-bar" class="h-full transition-all duration-300" style="width: 0%; background-color: var(--theme-primary)"></div>
+                        </div>
+
+                        <!-- Verdict Box -->
+                        <div id="ritual-verdict-card" class="hidden p-5 rounded-xl bg-black/90 border theme-border">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 mb-3 border-b border-white/10">
+                                <span id="verdict-dominus-tag" class="font-cinzel text-xs tracking-[0.2em] uppercase theme-text font-bold">
+                                    ВЕРДИКТ СОВЕТА ТРЁХ
+                                </span>
+                                <span id="verdict-hash" class="font-mono text-xs text-slate-400">
+                                    HASH: #FULL-998-NOX
+                                </span>
+                            </div>
+                            <p id="verdict-message" class="text-lg text-slate-200 leading-relaxed mb-4"></p>
+                            <div class="flex flex-wrap items-center justify-between gap-3 bg-white/[0.03] px-4 py-3 rounded-lg border border-white/5">
+                                <code id="verdict-secret-code" class="font-mono text-xs sm:text-sm theme-text">
+                                    magnet:?xt=urn:ordo_plenitudinis:4K_60FPS_SACRED_SOURCE
+                                </code>
+                                <button id="btn-copy-verdict" class="px-3 py-1 rounded bg-white/10 hover:bg-white/20 font-mono text-xs text-white transition-colors">
+                                    Скопировать Печать
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             5. THE TRIUMVIRATE SANCTUM (ГЛАВЫ КРУГА)
+             ========================================== -->
+        <section id="triumvirate" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-16 scroll-mt-20">
+            <div class="text-center max-w-3xl mx-auto mb-14">
+                <span class="font-mono text-xs uppercase tracking-[0.35em] theme-text block mb-2">
+                    [ SANCTUM TRIUMVIRATUS — ВЕРХОВНЫЕ ГЛАВЫ ОРДЕНА ]
+                </span>
+                <h2 class="font-display text-3xl sm:text-5xl uppercase tracking-wider metallic-title mb-4">
+                    Триумвират Владык Фулла
+                </h2>
+                <p class="text-slate-400 text-lg sm:text-xl italic">
+                    Во главе Тёмного Круга стоят три предвечных ипостаси: <strong class="text-purple-300">Dominus Nox</strong>, <strong class="text-sky-300">Dominus Silentii</strong> и <strong class="text-amber-300">Dominus Vitae</strong>. Наведи курсор или прикоснись к монолиту каждого Владыки, чтобы перестроить стихию Святилища.
+                </p>
+            </div>
+
+            <!-- Interactive Expanding Monoliths Grid / Accordion -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch">
+
+                <!-- 1. DOMINUS NOX -->
+                <article 
+                    class="monolith-card rounded-2xl p-7 sm:p-8 flex flex-col justify-between group" 
+                    data-lord="nox"
+                    style="--monolith-color: rgba(168, 85, 247, 0.28);"
+                >
+                    <div>
+                        <!-- Top Status Bar -->
+                        <div class="flex items-center justify-between font-mono text-xs text-purple-300/80 mb-6 pb-3 border-b border-purple-500/20">
+                            <span>I. АРХИМАГИСТР ПОЛУНОЧИ</span>
+                            <span class="px-2 py-0.5 rounded bg-purple-950/80 border border-purple-500/40">БЕЗДНА IX</span>
+                        </div>
+
+                        <!-- Custom SVG Emblem: Black Hole / Eclipse of Dominus Nox -->
+                        <div class="relative w-44 h-44 mx-auto my-4 flex items-center justify-center">
+                            <div class="absolute inset-2 rounded-full bg-purple-600/20 blur-2xl group-hover:scale-125 transition-transform duration-700"></div>
+                            <svg viewBox="0 0 200 200" class="w-full h-full text-purple-400">
+                                <!-- Outer Void Ring (Locked to center 100,100) -->
+                                <g>
+                                    <animateTransform attributeName="transform" type="rotate" from="0 100 100" to="360 100 100" dur="36s" repeatCount="indefinite" />
+                                    <circle cx="100" cy="100" r="88" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="4 8" class="opacity-60"/>
+                                    <circle cx="100" cy="12" r="2.5" fill="#e9d5ff"/>
+                                    <circle cx="100" cy="188" r="2.5" fill="#e9d5ff"/>
+                                    <circle cx="12" cy="100" r="2.5" fill="#a855f7"/>
+                                    <circle cx="188" cy="100" r="2.5" fill="#a855f7"/>
+                                </g>
+                                <!-- Counter-Rotating Accretion Ring (Locked to center 100,100) -->
+                                <g>
+                                    <animateTransform attributeName="transform" type="rotate" from="360 100 100" to="0 100 100" dur="24s" repeatCount="indefinite" />
+                                    <circle cx="100" cy="100" r="70" fill="none" stroke="#c084fc" stroke-width="1.5" stroke-dasharray="20 10" class="opacity-80"/>
+                                    <polygon points="100,26 104,34 96,34" fill="#e9d5ff"/>
+                                    <polygon points="100,174 104,166 96,166" fill="#e9d5ff"/>
+                                </g>
+                                <!-- Crescent / Total Eclipse Core -->
+                                <circle cx="100" cy="100" r="46" fill="#030108" stroke="#c084fc" stroke-width="2.5"/>
+                                <path d="M85,62 A40,40 0 1,0 138,115 A34,34 0 1,1 85,62 Z" fill="#a855f7" class="opacity-80"/>
+                                <!-- Nocturnal Star -->
+                                <path d="M100,72 L104,96 L128,100 L104,104 L100,128 L96,104 L72,100 L96,96 Z" fill="#ffffff"/>
+                            </svg>
+                        </div>
+
+                        <!-- Title & Epithet -->
+                        <h3 class="font-display text-2xl sm:text-3xl text-center text-purple-200 tracking-wider mt-4 mb-1">
+                            DOMINUS NOX
+                        </h3>
+                        <p class="font-cinzel text-xs text-center uppercase tracking-[0.25em] text-purple-400 mb-5">
+                            Владыка Ночи • Повелитель Бездны
+                        </p>
+
+                        <!-- Lore Description -->
+                        <p class="text-slate-300 text-base sm:text-lg leading-relaxed mb-6">
+                            Тот, кто бодрствует в три часа ночи, когда обычные поисковики бессильны. Способен вычислить первоисточник по одному шакальному пикселю, отражению в зрачке или тени на заднем плане в самых глубоких и забытых слоях сети.
+                        </p>
+                    </div>
+
+                    <div>
+                        <!-- Mystic Attributes -->
+                        <div class="space-y-2.5 font-mono text-xs bg-black/60 p-4 rounded-xl border border-purple-500/20 mb-6">
+                            <div class="flex justify-between">
+                                <span class="text-slate-400">Зрение во тьме:</span>
+                                <span class="text-purple-300 font-semibold">1 пиксель / 99.98%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-400">Час пиковой силы:</span>
+                                <span class="text-purple-300 font-semibold">03:33 AM (Полуночный Дозор)</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-400">Реликвия:</span>
+                                <span class="text-purple-300 font-semibold">Око Чёрного Затмения</span>
+                            </div>
+                        </div>
+
+                        <button 
+                            type="button"
+                            class="btn-invoke-dominus w-full py-3.5 px-5 rounded-xl font-cinzel text-xs uppercase tracking-[0.22em] font-bold bg-purple-950/50 hover:bg-purple-800/60 text-purple-200 border border-purple-500/50 transition-all shadow-[0_0_20px_rgba(168,85,247,0.2)]"
+                            data-dominus-key="nox"
+                        >
+                            Взывать к Dominus Nox
+                        </button>
+                    </div>
+                </article>
+
+                <!-- 2. DOMINUS SILENTII -->
+                <article 
+                    class="monolith-card rounded-2xl p-7 sm:p-8 flex flex-col justify-between group" 
+                    data-lord="silentii"
+                    style="--monolith-color: rgba(56, 189, 248, 0.25);"
+                >
+                    <div>
+                        <!-- Top Status Bar -->
+                        <div class="flex items-center justify-between font-mono text-xs text-sky-300/80 mb-6 pb-3 border-b border-sky-500/20">
+                            <span>II. СТРАЖ БЕЗМОЛВНЫХ АРХИВОВ</span>
+                            <span class="px-2 py-0.5 rounded bg-slate-900/90 border border-sky-400/40">СТАЗИС 0 dB</span>
+                        </div>
+
+                        <!-- Custom SVG Emblem: Shrouded Cipher Eye & Frozen Soundwaves -->
+                        <div class="relative w-44 h-44 mx-auto my-4 flex items-center justify-center">
+                            <div class="absolute inset-2 rounded-full bg-sky-500/20 blur-2xl group-hover:scale-125 transition-transform duration-700"></div>
+                            <svg viewBox="0 0 200 200" class="w-full h-full text-sky-300">
+                                <!-- Crystalline Octagon (Locked to center 100,100) -->
+                                <g>
+                                    <animateTransform attributeName="transform" type="rotate" from="360 100 100" to="0 100 100" dur="30s" repeatCount="indefinite" />
+                                    <polygon points="100,12 162,38 188,100 162,162 100,188 38,162 12,100 38,38" fill="none" stroke="currentColor" stroke-width="1.2"/>
+                                </g>
+                                <!-- Inner Harmonic Ring (Locked to center 100,100) -->
+                                <g>
+                                    <animateTransform attributeName="transform" type="rotate" from="0 100 100" to="360 100 100" dur="22s" repeatCount="indefinite" />
+                                    <circle cx="100" cy="100" r="66" fill="none" stroke="#38bdf8" stroke-width="1.2" stroke-dasharray="2 8"/>
+                                </g>
+                                <!-- Silent Soundwave Bars (Frozen at 0dB) -->
+                                <line x1="40" y1="100" x2="72" y2="100" stroke="#38bdf8" stroke-width="2" stroke-dasharray="3 3"/>
+                                <line x1="128" y1="100" x2="160" y2="100" stroke="#38bdf8" stroke-width="2" stroke-dasharray="3 3"/>
+                                <!-- Vertical Dagger of Silence -->
+                                <polygon points="100,26 112,100 100,174 88,100" fill="#070b12" stroke="#38bdf8" stroke-width="2"/>
+                                <circle cx="100" cy="100" r="18" fill="#04070d" stroke="#e0f2fe" stroke-width="2"/>
+                                <circle cx="100" cy="100" r="5" fill="#38bdf8"/>
+                            </svg>
+                        </div>
+
+                        <!-- Title & Epithet -->
+                        <h3 class="font-display text-2xl sm:text-3xl text-center text-sky-200 tracking-wider mt-4 mb-1">
+                            DOMINUS SILENTII
+                        </h3>
+                        <p class="font-cinzel text-xs text-center uppercase tracking-[0.25em] text-sky-400 mb-5">
+                            Владыка Безмолвия • Тень Заветной Ссылки
+                        </p>
+
+                        <!-- Lore Description with Cipher Effect -->
+                        <p id="silentii-lore-text" class="text-slate-300 text-base sm:text-lg leading-relaxed mb-6">
+                            Никогда не вступает в пустые споры и не пишет лишних букв. Является в тред из ледяного безмолвия, молча оставляет прямую ссылку на полный оригинал и растворяется в цифровой пустоте прежде, чем его успеют поблагодарить.
+                        </p>
+                    </div>
+
+                    <div>
+                        <!-- Mystic Attributes -->
+                        <div class="space-y-2.5 font-mono text-xs bg-black/60 p-4 rounded-xl border border-sky-500/20 mb-6">
+                            <div class="flex justify-between">
+                                <span class="text-slate-400">Лишних слов в тредах:</span>
+                                <span class="text-sky-300 font-semibold">0 (Абсолютный Ноль)</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-400">Эффект присутствия:</span>
+                                <span class="text-sky-300 font-semibold">Остановка времени и частиц</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-400">Реликвия:</span>
+                                <span class="text-sky-300 font-semibold">Печать Молчаливого Ответа</span>
+                            </div>
+                        </div>
+
+                        <button 
+                            type="button"
+                            class="btn-invoke-dominus w-full py-3.5 px-5 rounded-xl font-cinzel text-xs uppercase tracking-[0.22em] font-bold bg-sky-950/50 hover:bg-sky-800/60 text-sky-200 border border-sky-400/50 transition-all shadow-[0_0_20px_rgba(56,189,248,0.2)]"
+                            data-dominus-key="silentii"
+                        >
+                            Взывать к Dominus Silentii
+                        </button>
+                    </div>
+                </article>
+
+                <!-- 3. DOMINUS VITAE -->
+                <article 
+                    class="monolith-card rounded-2xl p-7 sm:p-8 flex flex-col justify-between group" 
+                    data-lord="vitae"
+                    style="--monolith-color: rgba(245, 158, 11, 0.28);"
+                >
+                    <div>
+                        <!-- Top Status Bar -->
+                        <div class="flex items-center justify-between font-mono text-xs text-amber-300/80 mb-6 pb-3 border-b border-amber-500/20">
+                            <span>III. АЛХИМИК ВОЗРОЖДЕНИЯ ИСТОКОВ</span>
+                            <span class="px-2 py-0.5 rounded bg-amber-950/80 border border-amber-500/40">4K • 60 FPS</span>
+                        </div>
+
+                        <!-- Custom SVG Emblem: Alchemical Sun & Ouroboros Phoenix -->
+                        <div class="relative w-44 h-44 mx-auto my-4 flex items-center justify-center">
+                            <div class="absolute inset-2 rounded-full bg-amber-500/20 blur-2xl group-hover:scale-125 transition-transform duration-700"></div>
+                            <svg viewBox="0 0 200 200" class="w-full h-full text-amber-400">
+                                <!-- Alchemical Sun Rays (Strictly locked to center 100,100 so it never flies off-screen) -->
+                                <g>
+                                    <animateTransform attributeName="transform" type="rotate" from="0 100 100" to="360 100 100" dur="28s" repeatCount="indefinite" />
+                                    <circle cx="100" cy="100" r="84" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="6 6"/>
+                                    <polygon points="100,8 106,26 94,26" fill="currentColor"/>
+                                    <polygon points="100,8 106,26 94,26" fill="currentColor" transform="rotate(45 100 100)"/>
+                                    <polygon points="100,8 106,26 94,26" fill="currentColor" transform="rotate(90 100 100)"/>
+                                    <polygon points="100,8 106,26 94,26" fill="currentColor" transform="rotate(135 100 100)"/>
+                                    <polygon points="100,8 106,26 94,26" fill="currentColor" transform="rotate(180 100 100)"/>
+                                    <polygon points="100,8 106,26 94,26" fill="currentColor" transform="rotate(225 100 100)"/>
+                                    <polygon points="100,8 106,26 94,26" fill="currentColor" transform="rotate(270 100 100)"/>
+                                    <polygon points="100,8 106,26 94,26" fill="currentColor" transform="rotate(315 100 100)"/>
+                                </g>
+                                <!-- Counter-Rotating Sacred Hexagram of Rebirth (Strictly locked to center 100,100) -->
+                                <g>
+                                    <animateTransform attributeName="transform" type="rotate" from="360 100 100" to="0 100 100" dur="20s" repeatCount="indefinite" />
+                                    <polygon points="100,36 155,132 45,132" fill="none" stroke="#ef4444" stroke-width="1.8"/>
+                                    <polygon points="100,164 155,68 45,68" fill="none" stroke="#f59e0b" stroke-width="1.8"/>
+                                </g>
+                                <!-- Philosopher's Stone Core -->
+                                <polygon points="100,66 134,100 100,134 66,100" fill="#180905" stroke="#fbbf24" stroke-width="2.5"/>
+                                <circle cx="100" cy="100" r="10" fill="#f59e0b" class="animate-pulse"/>
+                            </svg>
+                        </div>
+
+                        <!-- Title & Epithet -->
+                        <h3 class="font-display text-2xl sm:text-3xl text-center text-amber-200 tracking-wider mt-4 mb-1">
+                            DOMINUS VITAE
+                        </h3>
+                        <p class="font-cinzel text-xs text-center uppercase tracking-[0.25em] text-amber-400 mb-5">
+                            Владыка Жизни • Воскреситель Удалённого
+                        </p>
+
+                        <!-- Lore Description -->
+                        <p class="text-slate-300 text-base sm:text-lg leading-relaxed mb-6">
+                            Владыка живого огня и цифровой реанимации. Когда ссылка мертва уже десять лет, аккаунт автора стёрт, а ролик обрезан и перезалит сотню раз — Dominus Vitae воскрешает артефакт из пепла в первозданном нежатом 4K.
+                        </p>
+                    </div>
+
+                    <div>
+                        <!-- Mystic Attributes -->
+                        <div class="space-y-2.5 font-mono text-xs bg-black/60 p-4 rounded-xl border border-amber-500/20 mb-6">
+                            <div class="flex justify-between">
+                                <span class="text-slate-400">Воскрешённых реликвий:</span>
+                                <span class="text-amber-300 font-semibold">144,000+ (Бессмертный Архив)</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-400">Чистота трансмутации:</span>
+                                <span class="text-amber-300 font-semibold">UHD Без Вотермарок</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-400">Реликвия:</span>
+                                <span class="text-amber-300 font-semibold">Чаша Первозданного Исходника</span>
+                            </div>
+                        </div>
+
+                        <button 
+                            type="button"
+                            class="btn-invoke-dominus w-full py-3.5 px-5 rounded-xl font-cinzel text-xs uppercase tracking-[0.22em] font-bold bg-amber-950/50 hover:bg-amber-800/60 text-amber-200 border border-amber-500/50 transition-all shadow-[0_0_20px_rgba(245,158,11,0.2)]"
+                            data-dominus-key="vitae"
+                        >
+                            Взывать к Dominus Vitae
+                        </button>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Dynamic Invocation Decree Banner -->
+            <div id="dominus-decree-box" class="mt-10 p-6 sm:p-8 rounded-2xl bg-black/85 border theme-border theme-glow-box transition-all duration-500">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div class="flex items-center gap-5">
+                        <div class="w-14 h-14 rounded-xl bg-white/5 border theme-border flex items-center justify-center shrink-0">
+                            <span id="decree-roman" class="font-display text-2xl theme-text">III</span>
+                        </div>
+                        <div>
+                            <div class="font-mono text-xs uppercase tracking-[0.25em] theme-text mb-1" id="decree-title">
+                                АКТИВНА ПЕЧАТЬ ТРИУМВИРАТА: СОГЛАСИЕ ТРЁХ ВЛАДЫК
+                            </div>
+                            <p id="decree-quote" class="text-lg sm:text-xl text-slate-200 italic">
+                                «Где Ночь находит след, Безмолвие хранит ключ, а Жизнь возвращает полноту — там торжествует Истинный Фулл.»
+                            </p>
+                        </div>
+                    </div>
+                    <button id="btn-reset-aura" class="px-5 py-2.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/15 font-mono text-xs uppercase tracking-widest text-slate-300 shrink-0 transition-colors">
+                        Сбросить к Канону Круга
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             6. SACRED CODEX OF THE KEEPERS (КОДЕКС)
+             ========================================== -->
+        <section id="codex" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 scroll-mt-20">
+            <div class="text-center max-w-3xl mx-auto mb-14">
+                <span class="font-mono text-xs uppercase tracking-[0.35em] theme-text block mb-2">
+                    [ LEX AETERNA — СКРИЖАЛИ ЗАВЕТА ]
+                </span>
+                <h2 class="font-display text-3xl sm:text-5xl uppercase tracking-wider metallic-title mb-4">
+                    Священный Кодекс Хранителей
+                </h2>
+                <p class="text-slate-400 text-lg sm:text-xl italic">
+                    Нажми на любую каменную скрижаль, чтобы зажечь огненные руны и пробудить толкование Верховных Доминусов.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Tablet I -->
+                <div class="codex-tablet rounded-2xl p-7 cursor-pointer" data-tablet="1">
+                    <svg class="absolute top-0 right-0 w-40 h-40 pointer-events-none opacity-40 theme-text" viewBox="0 0 100 100">
+                        <path class="tablet-crack" d="M100,0 L70,25 L80,45 L50,65 L60,90" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                    </svg>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="font-display text-2xl theme-text">LEX I</span>
+                        <span class="font-mono text-xs text-slate-500 uppercase tracking-widest">ДОГМАТ МИЛОСЕРДИЯ</span>
+                    </div>
+                    <h3 class="font-cinzel text-xl text-white font-bold mb-3">
+                        «Ни один взывающий в комментариях да не уйдёт без ссылки»
+                    </h3>
+                    <p class="text-slate-300 text-lg leading-relaxed mb-4">
+                        Если страждущий вопрошает «Где фулл?» или «Друг просит ссылку», Хранитель не имеет права пройти мимо, отделавшись насмешкой.
+                    </p>
+                    <div class="tablet-commentary hidden mt-4 pt-4 border-t border-white/10 font-mono text-xs theme-text">
+                        ✦ Комментарий Dominus Silentii: «Слова излишни. Оставь гиперссылку и уйди в закат.»
+                    </div>
+                </div>
+
+                <!-- Tablet II -->
+                <div class="codex-tablet rounded-2xl p-7 cursor-pointer" data-tablet="2">
+                    <svg class="absolute top-0 right-0 w-40 h-40 pointer-events-none opacity-40 theme-text" viewBox="0 0 100 100">
+                        <path class="tablet-crack" d="M100,15 L65,30 L75,60 L40,80" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                    </svg>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="font-display text-2xl theme-text">LEX II</span>
+                        <span class="font-mono text-xs text-slate-500 uppercase tracking-widest">АНАФЕМА ОБРЕЗАЮЩИМ</span>
+                    </div>
+                    <h3 class="font-cinzel text-xl text-white font-bold mb-3">
+                        «Обрезавший видео на кульминации да будет низвергнут во тьму»
+                    </h3>
+                    <p class="text-slate-300 text-lg leading-relaxed mb-4">
+                        Тот, кто обрывает запись за секунду до развязки ради байта на комментарии и не прикладывает первоисточник, объявляется еретиком Проклятого Кропа.
+                    </p>
+                    <div class="tablet-commentary hidden mt-4 pt-4 border-t border-white/10 font-mono text-xs theme-text">
+                        ✦ Комментарий Dominus Nox: «Мы найдём оригинал даже того, что автор пытался скрыть за тремя вотермарками.»
+                    </div>
+                </div>
+
+                <!-- Tablet III -->
+                <div class="codex-tablet rounded-2xl p-7 cursor-pointer" data-tablet="3">
+                    <svg class="absolute top-0 right-0 w-40 h-40 pointer-events-none opacity-40 theme-text" viewBox="0 0 100 100">
+                        <path class="tablet-crack" d="M90,0 L60,35 L65,55 L35,85" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                    </svg>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="font-display text-2xl theme-text">LEX III</span>
+                        <span class="font-mono text-xs text-slate-500 uppercase tracking-widest">ЗАКОН ЕДИНОГО ПИКСЕЛЯ</span>
+                    </div>
+                    <h3 class="font-cinzel text-xl text-white font-bold mb-3">
+                        «Даже в десятом поколении шакалов живёт душа Истинного Исходника»
+                    </h3>
+                    <p class="text-slate-300 text-lg leading-relaxed mb-4">
+                        Сжатие, пересъёмка экрана на тапок и потеря кадров — лишь временные оковы. Долг Ордена — очистить артефакт до первозданного сияния.
+                    </p>
+                    <div class="tablet-commentary hidden mt-4 pt-4 border-t border-white/10 font-mono text-xs theme-text">
+                        ✦ Комментарий Dominus Vitae: «Из пепла 144p восстанет нерушимый 4K 60 кадров в секунду.»
+                    </div>
+                </div>
+
+                <!-- Tablet IV -->
+                <div class="codex-tablet rounded-2xl p-7 cursor-pointer" data-tablet="4">
+                    <svg class="absolute top-0 right-0 w-40 h-40 pointer-events-none opacity-40 theme-text" viewBox="0 0 100 100">
+                        <path class="tablet-crack" d="M100,20 L75,40 L55,45 L30,90" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                    </svg>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="font-display text-2xl theme-text">LEX IV</span>
+                        <span class="font-mono text-xs text-slate-500 uppercase tracking-widest">ПЕЧАТЬ БЛАГОДАРНОСТИ</span>
+                    </div>
+                    <h3 class="font-cinzel text-xl text-white font-bold mb-3">
+                        «Принявший дар Хранителя да вознесёт хвалу Ордену»
+                    </h3>
+                    <p class="text-slate-300 text-lg leading-relaxed mb-4">
+                        Когда в хаосе комментариев появляется рыцарь Тёмного Круга со ссылкой или таймкодом, священный долг каждого — поднять его ответ на вершину.
+                    </p>
+                    <div class="tablet-commentary hidden mt-4 pt-4 border-t border-white/10 font-mono text-xs theme-text">
+                        ✦ Вердикт Триумвирата: «Хранители не ищут славы, но чтят баланс Вселенной.»
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             7. THE RITUAL OF SUMMONING (РИТУАЛ ПРИЗЫВА)
+             ========================================== -->
+        <section id="summon" class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20 scroll-mt-20">
+            <div class="relative rounded-3xl bg-gradient-to-b from-[#0b0b14] to-[#040407] border theme-border p-8 sm:p-12 text-center theme-glow-box overflow-hidden">
+                
+                <span class="font-mono text-xs uppercase tracking-[0.35em] theme-text block mb-2">
+                    [ RITUALIS INVOCATIONIS — ПРИЗЫВ И ПОСВЯЩЕНИЕ ]
+                </span>
+                <h2 class="font-display text-3xl sm:text-5xl uppercase tracking-wider metallic-title mb-4">
+                    Ритуал Призыва Хранителей
+                </h2>
+                <p class="text-slate-300 text-lg sm:text-xl max-w-2xl mx-auto mb-10">
+                    Зажми и удерживай <span class="theme-text font-semibold">Великую Печать Круга</span>, чтобы сконцентрировать энергию трёх Владык, подать прошение на поиск или получить именную Грамоту Хранителя Фулла.
+                </p>
+
+                <!-- Hold-to-Summon Interactive Rune Seal -->
+                <div class="relative w-56 h-56 sm:w-64 sm:h-64 mx-auto flex items-center justify-center my-6 select-none">
+                    <!-- SVG Circular Progress Ring -->
+                    <svg class="w-full h-full -rotate-90" viewBox="0 0 220 220">
+                        <circle cx="110" cy="110" r="98" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="4"/>
+                        <circle 
+                            id="summon-progress-circle"
+                            cx="110" cy="110" r="98" 
+                            fill="none" 
+                            stroke="currentColor" 
+                            stroke-width="5" 
+                            stroke-linecap="round"
+                            stroke-dasharray="615.75" 
+                            stroke-dashoffset="615.75"
+                            class="theme-text transition-all duration-75"
+                        />
+                    </svg>
+
+                    <!-- Interactive Hold Button -->
+                    <button 
+                        id="btn-hold-summon"
+                        type="button"
+                        class="absolute inset-5 rounded-full bg-[#07070e] border-2 theme-border flex flex-col items-center justify-center group active:scale-95 transition-transform overflow-hidden"
+                    >
+                        <div class="absolute inset-0 opacity-20 group-hover:opacity-40 transition-opacity" style="background: radial-gradient(circle, var(--theme-primary), transparent 70%);"></div>
+                        <svg viewBox="0 0 100 100" class="w-16 h-16 theme-text mb-2 transition-transform duration-300 group-hover:scale-110">
+                            <polygon points="50,8 90,78 10,78" fill="none" stroke="currentColor" stroke-width="2.2"/>
+                            <polygon points="50,92 90,22 10,22" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="3 3"/>
+                            <circle cx="50" cy="52" r="10" fill="currentColor"/>
+                        </svg>
+                        <span id="summon-btn-label" class="font-cinzel text-[11px] sm:text-xs font-bold tracking-[0.2em] uppercase text-white px-4">
+                            Удерживай Печать
+                        </span>
+                        <span id="summon-charge-text" class="font-mono text-xs theme-text mt-1">
+                            0% КОНЦЕНТРАЦИИ
+                        </span>
+                    </button>
+                </div>
+
+                <p class="font-mono text-xs text-slate-500 uppercase tracking-widest mt-4">
+                    Зажми левую кнопку мыши (или удерживай палец на экране) до 100%
+                </p>
+
+                <!-- Revealed Sacred Scroll of Initiation / Oath Generator -->
+                <div id="sacred-oath-modal" class="hidden mt-10 pt-10 border-t border-white/15 text-left transition-all">
+                    <div class="max-w-2xl mx-auto">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="font-cinzel text-sm uppercase tracking-[0.25em] theme-text font-bold">
+                                ❖ ВРАТА ОТКРЫТЫ: СВИТОК ПОСВЯЩЕНИЯ В ОРДЕН ❖
+                            </span>
+                            <span class="font-mono text-xs text-emerald-400">РИТУАЛ ЗАВЕРШЁН (100%)</span>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5">
+                            <div>
+                                <label class="block font-mono text-xs uppercase text-slate-400 mb-2">Твоё Тайное Имя / Позывной:</label>
+                                <input id="initiate-name" type="text" placeholder="Archivarius_XIII" class="w-full px-4 py-3 rounded-xl bg-black/80 border theme-border text-white font-mono text-sm focus:outline-none"/>
+                            </div>
+                            <div>
+                                <label class="block font-mono text-xs uppercase text-slate-400 mb-2">Покровитель из Триумвирата:</label>
+                                <select id="initiate-patron" class="w-full px-4 py-3 rounded-xl bg-black/90 border theme-border text-white font-mono text-sm focus:outline-none">
+                                    <option value="nox">Dominus Nox (Владыка Ночи и Бездны)</option>
+                                    <option value="silentii">Dominus Silentii (Владыка Безмолвия)</option>
+                                    <option value="vitae">Dominus Vitae (Владыка Возрождения 4K)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button id="btn-forge-seal" type="button" class="w-full py-4 rounded-xl font-cinzel font-bold text-sm uppercase tracking-[0.25em] bg-white/10 hover:bg-white/20 border theme-border text-white transition-all mb-6">
+                            Выковать Именную Грамоту Хранителя
+                        </button>
+
+                        <!-- Generated Certificate Card -->
+                        <div id="forged-certificate" class="hidden p-6 rounded-2xl bg-[#050509] border-2 theme-border relative overflow-hidden">
+                            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-white/10 pb-4 mb-4">
+                                <div>
+                                    <span class="font-mono text-[10px] uppercase tracking-[0.3em] theme-text block">ORDO CUSTODUM PLENITUDINIS</span>
+                                    <h4 id="cert-holder-name" class="font-display text-2xl text-white tracking-wider mt-1">МАГИСТР ИСТОКА</h4>
+                                </div>
+                                <div class="px-3 py-1.5 rounded bg-white/5 border theme-border font-mono text-xs theme-text" id="cert-patron-badge">
+                                    ПОКРОВИТЕЛЬ: DOMINUS NOX
+                                </div>
+                            </div>
+                            <p class="text-slate-300 italic text-lg leading-relaxed mb-3">
+                                «Настоящей печатью подтверждается, что сей адепт принял клятву Тёмного Круга Хранителей Фулла, обязуется не оставлять страждущих без ссылки и хранить чистоту Первоисточника во веки веков.»
+                            </p>
+                            <div class="flex items-center justify-between font-mono text-[11px] text-slate-500 pt-2">
+                                <span id="cert-id-code">SEAL-ID: #DCFK-001</span>
+                                <span>ПОДПИСАНО: DOMINUS NOX • SILENTII • VITAE</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- ==========================================
+         8. FOOTER OF THE ABYSS
+         ========================================== -->
+    <footer class="relative z-10 border-t border-white/10 bg-[#030306] py-12 px-4">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+            <div>
+                <p class="font-display text-lg tracking-widest text-white">
+                    THE DARK CIRCLE OF THE FULL KEEPERS
+                </p>
+                <p class="font-mono text-xs text-slate-500 mt-1">
+                    Тёмный Круг Хранителей Фулла • Под вечным правлением Dominus Nox, Dominus Silentii & Dominus Vitae
+                </p>
+            </div>
+            <div class="font-mono text-xs theme-text uppercase tracking-widest">
+                «IN PLENITUDINE VERITAS — В ПОЛНОТЕ ИСТИНА»
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==========================================
+         JAVASCRIPT ENGINE: AUDIO, CANVAS, RITUALS
+         ========================================== -->
+    <script>
+        window.onload = function () {
+            /* -----------------------------------------------------------
+               1. WEB AUDIO SYNTHESIZER (MYSTIC DRONE, CHIMES & RITUALS)
+               ----------------------------------------------------------- */
+            let audioCtx = null;
+            let isAudioEnabled = false;
+            let ambientOsc = null;
+            let ambientGain = null;
+
+            function initAudio() {
+                if (!audioCtx) {
+                    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                    if (AudioContextClass) {
+                        audioCtx = new AudioContextClass();
+                    }
+                }
+                if (audioCtx && audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+            }
+
+            function startAmbientDrone() {
+                try {
+                    initAudio();
+                    if (!audioCtx || ambientOsc) return;
+
+                    ambientOsc = audioCtx.createOscillator();
+                    const subOsc = audioCtx.createOscillator();
+                    ambientGain = audioCtx.createGain();
+
+                    ambientOsc.type = 'sawtooth';
+                    ambientOsc.frequency.setValueAtTime(55, audioCtx.currentTime); // Deep A1 drone
+
+                    subOsc.type = 'sine';
+                    subOsc.frequency.setValueAtTime(27.5, audioCtx.currentTime); // Sub bass A0
+
+                    // Lowpass filter for dark atmospheric warmth
+                    const filter = audioCtx.createBiquadFilter();
+                    filter.type = 'lowpass';
+                    filter.frequency.setValueAtTime(160, audioCtx.currentTime);
+
+                    ambientGain.gain.setValueAtTime(0.001, audioCtx.currentTime);
+                    ambientGain.gain.exponentialRampToValueAtTime(0.05, audioCtx.currentTime + 1.5);
+
+                    ambientOsc.connect(filter);
+                    subOsc.connect(filter);
+                    filter.connect(ambientGain);
+                    ambientGain.connect(audioCtx.destination);
+
+                    ambientOsc.start();
+                    subOsc.start();
+                    isAudioEnabled = true;
+                    updateAudioUI();
+                } catch (e) {
+                    console.warn('Audio init skipped:', e);
+                }
+            }
+
+            function playMysticChord(baseFreq = 220, type = 'triangle', duration = 1.2) {
+                if (!isAudioEnabled || !audioCtx) return;
+                try {
+                    const now = audioCtx.currentTime;
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+
+                    osc.type = type;
+                    osc.frequency.setValueAtTime(baseFreq, now);
+                    osc.frequency.exponentialRampToValueAtTime(baseFreq * 1.5, now + duration);
+
+                    gain.gain.setValueAtTime(0.08, now);
+                    gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+
+                    osc.start(now);
+                    osc.stop(now + duration);
+                } catch (err) {}
+            }
+
+            function toggleAudio() {
+                if (!audioCtx) {
+                    startAmbientDrone();
+                    return;
+                }
+                isAudioEnabled = !isAudioEnabled;
+                if (ambientGain && audioCtx) {
+                    ambientGain.gain.setTargetAtTime(isAudioEnabled ? 0.05 : 0.0001, audioCtx.currentTime, 0.3);
+                }
+                updateAudioUI();
+            }
+
+            function updateAudioUI() {
+                const onIcon = document.getElementById('icon-sound-on');
+                const offIcon = document.getElementById('icon-sound-off');
+                if (isAudioEnabled) {
+                    onIcon.classList.remove('hidden');
+                    offIcon.classList.add('hidden');
+                } else {
+                    onIcon.classList.add('hidden');
+                    offIcon.classList.remove('hidden');
+                }
+            }
+
+            document.getElementById('btn-audio-toggle').addEventListener('click', toggleAudio);
+
+            /* -----------------------------------------------------------
+               2. GATE OF INITIATION (PRELOADER SHATTER)
+               ----------------------------------------------------------- */
+            const gateOverlay = document.getElementById('initiation-gate');
+            const btnInitiate = document.getElementById('btn-initiate');
+            const gateSeal = document.getElementById('gate-seal-container');
+
+            btnInitiate.addEventListener('click', () => {
+                startAmbientDrone();
+                playMysticChord(110, 'sawtooth', 1.8);
+
+                document.body.classList.add('screen-shake');
+                gateSeal.style.transform = 'scale(1.65) rotate(45deg)';
+                gateSeal.style.opacity = '0';
+
+                // Trigger particle burst from center
+                burstParticles(window.innerWidth / 2, window.innerHeight / 2, 45);
+
+                setTimeout(() => {
+                    gateOverlay.style.opacity = '0';
+                    gateOverlay.style.pointerEvents = 'none';
+                    document.body.classList.remove('screen-shake');
+                }, 650);
+
+                setTimeout(() => {
+                    gateOverlay.style.display = 'none';
+                }, 1600);
+            });
+
+            /* -----------------------------------------------------------
+               3. CUSTOM RUNIC CURSOR & HOVER MAGNETISM
+               ----------------------------------------------------------- */
+            const cursorDot = document.getElementById('cursor-dot');
+            const cursorRing = document.getElementById('cursor-ring');
+            let mouseX = window.innerWidth / 2;
+            let mouseY = window.innerHeight / 2;
+            let ringX = mouseX;
+            let ringY = mouseY;
+
+            window.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                cursorDot.style.left = `${mouseX}px`;
+                cursorDot.style.top = `${mouseY}px`;
+            });
+
+            function animateCursor() {
+                ringX += (mouseX - ringX) * 0.18;
+                ringY += (mouseY - ringY) * 0.18;
+                cursorRing.style.left = `${ringX}px`;
+                cursorRing.style.top = `${ringY}px`;
+                requestAnimationFrame(animateCursor);
+            }
+            animateCursor();
+
+            const interactiveElements = document.querySelectorAll('a, button, input, select, .monolith-card, .codex-tablet');
+            interactiveElements.forEach((el) => {
+                el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+                el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+            });
+
+            /* -----------------------------------------------------------
+               4. INTERACTIVE PARTICLE ENGINE (NOX / SILENTII / VITAE MODES)
+               ----------------------------------------------------------- */
+            const canvas = document.getElementById('abyss-canvas');
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            let currentParticleMode = 'default'; // 'default' | 'nox' | 'silentii' | 'vitae'
+
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+
+            class RuneParticle {
+                constructor(isBurst = false, bx = 0, by = 0) {
+                    this.reset(isBurst, bx, by);
+                }
+
+                reset(isBurst = false, bx = 0, by = 0) {
+                    this.x = isBurst ? bx : Math.random() * canvas.width;
+                    this.y = isBurst ? by : Math.random() * canvas.height;
+                    this.size = Math.random() * 2.4 + 0.8;
+                    this.vx = isBurst ? (Math.random() - 0.5) * 9 : (Math.random() - 0.5) * 0.6;
+                    this.vy = isBurst ? (Math.random() - 0.5) * 9 : -Math.random() * 0.8 - 0.2;
+                    this.alpha = Math.random() * 0.65 + 0.15;
+                    this.isBurst = isBurst;
+                    this.life = isBurst ? 1.0 : 999;
+                }
+
+                update() {
+                    if (this.isBurst) {
+                        this.x += this.vx;
+                        this.y += this.vy;
+                        this.vx *= 0.96;
+                        this.vy *= 0.96;
+                        this.life -= 0.02;
+                        this.alpha = Math.max(0, this.life);
+                        return;
+                    }
+
+                    if (currentParticleMode === 'silentii') {
+                        // Dominus Silentii: Absolute Zero Stasis — particles freeze in crystal suspension
+                        this.x += Math.sin(Date.now() * 0.001 + this.y) * 0.08;
+                        return;
+                    } else if (currentParticleMode === 'nox') {
+                        // Dominus Nox: Gravitational Black Hole Vortex toward cursor
+                        const dx = mouseX - this.x;
+                        const dy = mouseY - this.y;
+                        const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+                        if (dist < 360) {
+                            // Tangential orbital swirl + inward pull
+                            this.x += (dx / dist) * 1.4 - (dy / dist) * 1.8;
+                            this.y += (dy / dist) * 1.4 + (dx / dist) * 1.8;
+                        } else {
+                            this.x += this.vx;
+                            this.y += this.vy * 0.5;
+                        }
+                    } else if (currentParticleMode === 'vitae') {
+                        // Dominus Vitae: Rising Alchemical Embers & Golden Sparks
+                        this.y -= Math.abs(this.vy) * 2.6 + 0.6;
+                        this.x += Math.sin(Date.now() * 0.003 + this.y * 0.02) * 0.9;
+                    } else {
+                        // Default Canon Drift
+                        this.x += this.vx;
+                        this.y += this.vy;
+                    }
+
+                    // Wrap boundaries
+                    if (this.y < -10) this.y = canvas.height + 10;
+                    if (this.y > canvas.height + 10) this.y = -10;
+                    if (this.x < -10) this.x = canvas.width + 10;
+                    if (this.x > canvas.width + 10) this.x = -10;
+                }
+
+                draw() {
+                    const rgb = getComputedStyle(document.body).getPropertyValue('--theme-accent-rgb').trim() || '212, 175, 55';
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(${rgb}, ${this.alpha})`;
+                    ctx.fill();
+                }
+            }
+
+            function initParticles() {
+                particles = [];
+                const count = window.innerWidth < 768 ? 45 : 95;
+                for (let i = 0; i < count; i++) {
+                    particles.push(new RuneParticle(false));
+                }
+            }
+            initParticles();
+
+            function burstParticles(x, y, count = 30) {
+                for (let i = 0; i < count; i++) {
+                    particles.push(new RuneParticle(true, x, y));
+                }
+            }
+
+            function animateCanvas() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                const rgb = getComputedStyle(document.body).getPropertyValue('--theme-accent-rgb').trim() || '212, 175, 55';
+
+                for (let i = particles.length - 1; i >= 0; i--) {
+                    const p = particles[i];
+                    p.update();
+                    p.draw();
+
+                    // Connect nearby particles to cursor with faint runic threads
+                    const dx = mouseX - p.x;
+                    const dy = mouseY - p.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 130) {
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(mouseX, mouseY);
+                        ctx.strokeStyle = `rgba(${rgb}, ${(1 - dist / 130) * 0.22})`;
+                        ctx.lineWidth = 0.7;
+                        ctx.stroke();
+                    }
+
+                    if (p.isBurst && p.life <= 0) {
+                        particles.splice(i, 1);
+                    }
+                }
+                requestAnimationFrame(animateCanvas);
+            }
+            animateCanvas();
+
+            /* -----------------------------------------------------------
+               5. HERO EMBLEM 3D INTERACTION & ALTAR OF SEARCH
+               ----------------------------------------------------------- */
+            const heroWrapper = document.getElementById('hero-emblem-wrapper');
+            const altarCore = document.getElementById('altar-core');
+            const altarRingOuter = document.getElementById('altar-ring-outer');
+            const searchInput = document.getElementById('full-search-input');
+            const runeCounter = document.getElementById('rune-energy-counter');
+
+            window.addEventListener('mousemove', (e) => {
+                const normX = (e.clientX / window.innerWidth - 0.5) * 18;
+                const normY = (e.clientY / window.innerHeight - 0.5) * 18;
+                altarCore.style.transform = `translate(${normX}px, ${normY}px)`;
+            });
+
+            searchInput.addEventListener('input', () => {
+                const len = searchInput.value.trim().length;
+                if (len > 0) {
+                    altarRingOuter.classList.add('animate-spin-fast');
+                    runeCounter.textContent = `РУНЫ АКТИВНЫ: ${len * 108} Гц`;
+                    playMysticChord(180 + (len % 12) * 25, 'sine', 0.15);
+                } else {
+                    altarRingOuter.classList.remove('animate-spin-fast');
+                    runeCounter.textContent = 'РУНЫ: ПОКОЙ';
+                }
+            });
+
+            // Preset Query Buttons
+            document.querySelectorAll('.preset-query').forEach((btn) => {
+                btn.addEventListener('click', () => {
+                    searchInput.value = btn.getAttribute('data-query');
+                    searchInput.dispatchEvent(new Event('input'));
+                    runSearchRitual();
+                });
+            });
+
+            // Altar Search Execution
+            const btnSearchRitual = document.getElementById('btn-search-ritual');
+            const ritualOutput = document.getElementById('search-ritual-output');
+            const ritualStageText = document.getElementById('ritual-stage-text');
+            const ritualPercent = document.getElementById('ritual-percent');
+            const ritualBar = document.getElementById('ritual-progress-bar');
+            const verdictCard = document.getElementById('ritual-verdict-card');
+            const verdictMessage = document.getElementById('verdict-message');
+            const verdictHash = document.getElementById('verdict-hash');
+            const verdictSecretCode = document.getElementById('verdict-secret-code');
+
+            const verdictsPool = [
+                {
+                    lord: 'ВЕРДИКТ DOMINUS NOX (ПОЛУНОЧНЫЙ ДОЗОР)',
+                    msg: 'По одному размытому пикселю в левом нижнем углу установлено: артефакт был снят в 2012 году, пережат 14 раз, но полный исходник сохранён в Тайном Хранилище Уровня IX.',
+                    code: 'ordo://abyss-vault.nox/full_restore/id_99481_uncompressed.mkv'
+                },
+                {
+                    lord: 'ВЕРДИКТ DOMINUS SILENTII (БЕЗМОЛВНЫЙ ОТВЕТ)',
+                    msg: 'Без лишних слов. Ссылка извлечена из удалённого комментария семилетней давности. Печать молчания наложена на всех, кто писал «За вами постою».',
+                    code: 'ordo://silent-sanctum.org/direct_source/full_verified_0dB.mp4'
+                },
+                {
+                    lord: 'ВЕРДИКТ DOMINUS VITAE (АЛХИМИЯ ВОЗРОЖДЕНИЯ)',
+                    msg: 'Обрезанный фрагмент исцелён живым огнём! Восстановлены недостающие 4 минуты 38 секунд финала, частота кадров поднята до 60 FPS в разрешении 4K Ultra HD.',
+                    code: 'ordo://vitae-alchemia.full/remaster_4K60_golden_edition.iso'
+                }
+            ];
+
+            function runSearchRitual() {
+                const query = searchInput.value.trim() || 'Неизвестный фрагмент древнего свитка';
+                ritualOutput.classList.remove('hidden');
+                verdictCard.classList.add('hidden');
+                altarRingOuter.classList.add('animate-spin-fast');
+                playMysticChord(140, 'sawtooth', 0.9);
+
+                const stages = [
+                    { pct: 25, txt: 'ВХОЖДЕНИЕ В ТЕНЕВЫЕ ТРЕДЫ DOMINUS NOX...' },
+                    { pct: 55, txt: 'ДЕШИФРОВКА БЕЗМОЛВНЫХ АРХИВОВ DOMINUS SILENTII...' },
+                    { pct: 85, txt: 'АЛХИМИЧЕСКАЯ РЕСТАВРАЦИЯ КАДРОВ DOMINUS VITAE...' },
+                    { pct: 100, txt: 'ПЕРВОИСТОЧНИК ОБНАРУЖЕН И ЗАПЕЧАТАН!' }
+                ];
+
+                let step = 0;
+                const interval = setInterval(() => {
+                    const current = stages[step];
+                    ritualBar.style.width = `${current.pct}%`;
+                    ritualPercent.textContent = `${current.pct}%`;
+                    ritualStageText.textContent = current.txt;
+                    playMysticChord(200 + step * 80, 'triangle', 0.35);
+
+                    step++;
+                    if (step >= stages.length) {
+                        clearInterval(interval);
+                        setTimeout(() => {
+                            const chosen = verdictsPool[Math.floor(Math.random() * verdictsPool.length)];
+                            document.getElementById('verdict-dominus-tag').textContent = chosen.lord;
+                            verdictHash.textContent = `HASH: #FULL-${Math.floor(1000 + Math.random() * 9000)}`;
+                            verdictMessage.innerHTML = `По запросу <span class="theme-text font-semibold">«${query}»</span>: ${chosen.msg}`;
+                            verdictSecretCode.textContent = chosen.code;
+                            verdictCard.classList.remove('hidden');
+                            altarRingOuter.classList.remove('animate-spin-fast');
+                        }, 300);
+                    }
+                }, 420);
+            }
+
+            btnSearchRitual.addEventListener('click', runSearchRitual);
+            searchInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') runSearchRitual();
+            });
+
+            // Copy Verdict Link using execCommand fallback
+            const btnCopyVerdict = document.getElementById('btn-copy-verdict');
+            btnCopyVerdict.addEventListener('click', () => {
+                const tempInput = document.createElement('textarea');
+                tempInput.value = verdictSecretCode.textContent;
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                document.execCommand('copy');
+                document.body.removeChild(tempInput);
+                btnCopyVerdict.textContent = 'Печать Скопирована ✓';
+                setTimeout(() => {
+                    btnCopyVerdict.textContent = 'Скопировать Печать';
+                }, 2000);
+            });
+
+            /* -----------------------------------------------------------
+               6. THE TRIUMVIRATE SANCTUM: DOMINUS NOX, SILENTII, VITAE
+               ----------------------------------------------------------- */
+            const lordData = {
+                nox: {
+                    label: 'Аура: Dominus Nox',
+                    roman: 'I',
+                    title: 'DOMINUS NOX — ВЛАДЫКА НОЧИ И ПОЛУНОЧНОГО ПОИСКА',
+                    quote: '«Тьма не скрывает источник — она лишь отсеивает слабых духом. В 03:33 ночи любой шакальный пиксель выдаёт своё имя.»',
+                    freq: 110
+                },
+                silentii: {
+                    label: 'Аура: Dominus Silentii',
+                    roman: 'II',
+                    title: 'DOMINUS SILENTII — ВЛАДЫКА БЕЗМОЛВИЯ И ТАЙНЫХ ССЫЛОК',
+                    quote: '«........................ [Прямая ссылка доставлена без единого лишнего слова] ........................»',
+                    freq: 330
+                },
+                vitae: {
+                    label: 'Аура: Dominus Vitae',
+                    roman: 'III',
+                    title: 'DOMINUS VITAE — ВЛАДЫКА ЖИЗНИ И ВОЗРОЖДЕНИЯ ИСТОКОВ',
+                    quote: '«Ничто не удалено навечно. Пока бьётся сердце Ордена, каждый обрезанный фрагмент обретёт вечную жизнь в 4K.»',
+                    freq: 261.6
+                }
+            };
+
+            const auraLabel = document.getElementById('aura-label');
+            const decreeRoman = document.getElementById('decree-roman');
+            const decreeTitle = document.getElementById('decree-title');
+            const decreeQuote = document.getElementById('decree-quote');
+
+            function activateDominusTheme(lordKey) {
+                if (!lordData[lordKey]) return;
+                document.body.setAttribute('data-dominus', lordKey);
+                currentParticleMode = lordKey;
+
+                const info = lordData[lordKey];
+                auraLabel.textContent = info.label;
+                decreeRoman.textContent = info.roman;
+                decreeTitle.textContent = info.title;
+                decreeQuote.textContent = info.quote;
+
+                playMysticChord(info.freq, 'triangle', 0.9);
+
+                // Special cipher scramble effect when invoking Dominus Silentii
+                if (lordKey === 'silentii') {
+                    scrambleTextEffect(document.getElementById('silentii-lore-text'));
+                }
+            }
+
+            // Cipher Text Decryption Animation for Dominus Silentii
+            const silentiiOriginalText = document.getElementById('silentii-lore-text').textContent.trim();
+            let isScrambling = false;
+            function scrambleTextEffect(element) {
+                if (isScrambling) return;
+                isScrambling = true;
+                const glyphs = 'Ø∆◊†‡※01▒▓█';
+                let iterations = 0;
+                const interval = setInterval(() => {
+                    element.textContent = silentiiOriginalText
+                        .split('')
+                        .map((char, idx) => {
+                            if (char === ' ') return ' ';
+                            if (idx < iterations) return silentiiOriginalText[idx];
+                            return glyphs[Math.floor(Math.random() * glyphs.length)];
+                        })
+                        .join('');
+                    iterations += 8;
+                    if (iterations >= silentiiOriginalText.length) {
+                        clearInterval(interval);
+                        element.textContent = silentiiOriginalText;
+                        isScrambling = false;
+                    }
+                }, 30);
+            }
+
+            document.querySelectorAll('.monolith-card').forEach((card) => {
+                const lordKey = card.getAttribute('data-lord');
+                card.addEventListener('mouseenter', () => {
+                    activateDominusTheme(lordKey);
+                });
+            });
+
+            document.querySelectorAll('.btn-invoke-dominus').forEach((btn) => {
+                btn.addEventListener('click', (e) => {
+                    const key = btn.getAttribute('data-dominus-key');
+                    activateDominusTheme(key);
+                    const rect = btn.getBoundingClientRect();
+                    burstParticles(rect.left + rect.width / 2, rect.top, 30);
+
+                    // Pre-select this Dominus in the bottom initiation scroll
+                    const patronSelect = document.getElementById('initiate-patron');
+                    if (patronSelect) patronSelect.value = key;
+                });
+            });
+
+            document.getElementById('btn-reset-aura').addEventListener('click', () => {
+                document.body.removeAttribute('data-dominus');
+                currentParticleMode = 'default';
+                auraLabel.textContent = 'Аура: Канон Круга';
+                decreeRoman.textContent = 'III';
+                decreeTitle.textContent = 'АКТИВНА ПЕЧАТЬ ТРИУМВИРАТА: СОГЛАСИЕ ТРЁХ ВЛАДЫК';
+                decreeQuote.textContent = '«Где Ночь находит след, Безмолвие хранит ключ, а Жизнь возвращает полноту — там торжествует Истинный Фулл.»';
+                playMysticChord(196, 'sine', 0.8);
+            });
+
+            /* -----------------------------------------------------------
+               7. SACRED CODEX TABLETS IGNITION
+               ----------------------------------------------------------- */
+            document.querySelectorAll('.codex-tablet').forEach((tablet) => {
+                tablet.addEventListener('click', () => {
+                    tablet.classList.toggle('tablet-ignited');
+                    const comment = tablet.querySelector('.tablet-commentary');
+                    if (comment) {
+                        comment.classList.toggle('hidden');
+                    }
+                    playMysticChord(240, 'triangle', 0.5);
+                });
+            });
+
+            /* -----------------------------------------------------------
+               8. HOLD-TO-SUMMON RITUAL ENGINE
+               ----------------------------------------------------------- */
+            const btnHoldSummon = document.getElementById('btn-hold-summon');
+            const progressCircle = document.getElementById('summon-progress-circle');
+            const summonChargeText = document.getElementById('summon-charge-text');
+            const summonBtnLabel = document.getElementById('summon-btn-label');
+            const ritualVignette = document.getElementById('ritual-vignette');
+            const sacredOathModal = document.getElementById('sacred-oath-modal');
+
+            const circumference = 615.75;
+            let charge = 0;
+            let isHolding = false;
+            let holdInterval = null;
+
+            function updateSummonVisuals() {
+                const offset = circumference - (charge / 100) * circumference;
+                progressCircle.style.strokeDashoffset = offset;
+                summonChargeText.textContent = `${Math.floor(charge)}% КОНЦЕНТРАЦИИ`;
+                ritualVignette.style.opacity = (charge / 100) * 0.85;
+            }
+
+            function startHolding(e) {
+                if (e.type === 'touchstart') e.preventDefault();
+                if (charge >= 100) return;
+                isHolding = true;
+                summonBtnLabel.textContent = 'КОНЦЕНТРАЦИЯ ЭНЕРГИИ...';
+
+                clearInterval(holdInterval);
+                holdInterval = setInterval(() => {
+                    if (isHolding && charge < 100) {
+                        charge = Math.min(100, charge + 2.5);
+                        updateSummonVisuals();
+                        if (Math.floor(charge) % 15 === 0) {
+                            playMysticChord(150 + charge * 4, 'sine', 0.2);
+                        }
+                        if (charge >= 100) {
+                            completeSummonRitual();
+                        }
+                    } else if (!isHolding && charge > 0 && charge < 100) {
+                        charge = Math.max(0, charge - 3.5);
+                        updateSummonVisuals();
+                        if (charge === 0) {
+                            clearInterval(holdInterval);
+                            summonBtnLabel.textContent = 'Удерживай Печать';
+                        }
+                    }
+                }, 35);
+            }
+
+            function stopHolding() {
+                isHolding = false;
+                if (charge < 100) {
+                    summonBtnLabel.textContent = 'Удерживай Печать';
+                }
+            }
+
+            function completeSummonRitual() {
+                isHolding = false;
+                clearInterval(holdInterval);
+                ritualVignette.style.opacity = '0';
+                summonBtnLabel.textContent = 'ПЕЧАТЬ ПРОБУЖДЕНА';
+                summonChargeText.textContent = '100% • ДОСТУП ОТКРЫТ';
+
+                document.body.classList.add('screen-shake');
+                playMysticChord(440, 'triangle', 1.6);
+
+                const rect = btnHoldSummon.getBoundingClientRect();
+                burstParticles(rect.left + rect.width / 2, rect.top + rect.height / 2, 50);
+
+                sacredOathModal.classList.remove('hidden');
+                setTimeout(() => {
+                    document.body.classList.remove('screen-shake');
+                    sacredOathModal.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }, 450);
+            }
+
+            btnHoldSummon.addEventListener('mousedown', startHolding);
+            window.addEventListener('mouseup', stopHolding);
+            btnHoldSummon.addEventListener('touchstart', startHolding, { passive: false });
+            window.addEventListener('touchend', stopHolding);
+
+            /* -----------------------------------------------------------
+               9. FORGE INITIATE CERTIFICATE
+               ----------------------------------------------------------- */
+            const btnForgeSeal = document.getElementById('btn-forge-seal');
+            const forgedCert = document.getElementById('forged-certificate');
+
+            btnForgeSeal.addEventListener('click', () => {
+                const rawName = document.getElementById('initiate-name').value.trim() || 'Безымянный Адепт Истины';
+                const patronKey = document.getElementById('initiate-patron').value;
+                activateDominusTheme(patronKey);
+
+                const patronTitles = {
+                    nox: 'ПОКРОВИТЕЛЬ: DOMINUS NOX (ВЛАДЫКА НОЧИ)',
+                    silentii: 'ПОКРОВИТЕЛЬ: DOMINUS SILENTII (ВЛАДЫКА БЕЗМОЛВИЯ)',
+                    vitae: 'ПОКРОВИТЕЛЬ: DOMINUS VITAE (ВЛАДЫКА ЖИЗНИ)'
+                };
+
+                document.getElementById('cert-holder-name').textContent = rawName.toUpperCase();
+                document.getElementById('cert-patron-badge').textContent = patronTitles[patronKey];
+                document.getElementById('cert-id-code').textContent = `SEAL-ID: #DCFK-${Math.floor(10000 + Math.random() * 90000)}-${patronKey.toUpperCase()}`;
+
+                forgedCert.classList.remove('hidden');
+                playMysticChord(320, 'triangle', 1.1);
+            });
+        };
+    </script>
+</body>
+</html>

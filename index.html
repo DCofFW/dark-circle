@@ -107,18 +107,16 @@
            ZERO-LAG HARDWARE-ACCELERATED CUSTOM CURSOR
            No CSS transition on transform/left/top! Instant 1:1 tracking.
            ============================================================== */
-        #zero-lag-cursor {
+        #custom-cursor {
             position: fixed;
             top: 0;
             left: 0;
             width: 68px;
             height: 68px;
-            margin-left: -34px;
-            margin-top: -34px;
             pointer-events: none;
-            z-index: 10000;
+            z-index: 99999;
             will-change: transform;
-            transform: translate3d(-200px, -200px, 0);
+            transform: translate3d(-200px, -200px, 0) translate(-50%, -50%);
         }
         #cursor-inner-scale {
             width: 100%;
@@ -133,13 +131,14 @@
 
         /* ==============================================================
            RADICAL FULL-SITE REALITY MUTATIONS PER LORD
+           Applied strictly to #site-warp-wrapper so fixed cursor NEVER breaks!
            ============================================================== */
         /* 1. NOX: Gravitational Singularity Warp & Cosmic Zero-G Drift */
         @keyframes nox-singularity-float {
             0%, 100% { transform: perspective(1200px) rotateX(0.6deg) rotateY(-0.6deg) translateY(0px); }
             50% { transform: perspective(1200px) rotateX(-0.6deg) rotateY(0.6deg) translateY(-9px); }
         }
-        body[data-lord="nox"] #sanctum-wrapper {
+        body[data-lord="nox"] #site-warp-wrapper {
             animation: nox-singularity-float 6s ease-in-out infinite;
         }
         #nox-nebula-vignette {
@@ -162,7 +161,7 @@
             93% { transform: translate(-4px, 0px) scaleY(1.015); }
             95% { transform: translate(5px, 2px) skewX(4deg); }
         }
-        body[data-lord="silentii"] #sanctum-wrapper {
+        body[data-lord="silentii"] #site-warp-wrapper {
             animation: silentii-vhs-rupture 3.2s infinite;
         }
         body[data-lord="silentii"] h1,
@@ -189,7 +188,7 @@
             76% { transform: scale(0.994); }
             80% { transform: scale(1.02); filter: drop-shadow(0 0 28px rgba(57, 255, 20, 0.85)); }
         }
-        body[data-lord="vitae"] #sanctum-wrapper {
+        body[data-lord="vitae"] #site-warp-wrapper {
             animation: vitae-necro-heartbeat 2.2s infinite;
         }
         #vitae-necro-overlay {
@@ -202,7 +201,7 @@
             opacity: 1;
         }
 
-        /* Violent Screen Rupture & Taboo Inversion */
+        /* Violent Screen Rupture & Taboo Inversion (Applied to #site-warp-wrapper ONLY) */
         @keyframes cataclysm-shake {
             0% { transform: translate(0, 0) rotate(0deg) scale(1); filter: invert(0); }
             15% { transform: translate(-18px, 10px) rotate(-2.5deg) scale(1.04); filter: invert(0.9) hue-rotate(120deg); }
@@ -211,7 +210,7 @@
             75% { transform: translate(10px, 8px) skewX(-8deg); }
             100% { transform: translate(0, 0) rotate(0deg) scale(1); filter: none; }
         }
-        .reality-rupture {
+        #site-warp-wrapper.reality-rupture {
             animation: cataclysm-shake 0.65s cubic-bezier(0.36, 0.07, 0.19, 0.97) both !important;
         }
 
@@ -221,7 +220,7 @@
             80% { transform: rotate(180deg) scale(0.94) skewX(-10deg); filter: invert(0.9) sepia(1) saturate(6) hue-rotate(-50deg); }
             100% { transform: rotate(360deg) scale(1); filter: none; }
         }
-        .taboo-broken {
+        #site-warp-wrapper.taboo-broken {
             animation: taboo-upside-down 2.6s cubic-bezier(0.22, 1, 0.36, 1) both !important;
         }
 
@@ -238,13 +237,25 @@
             transform: scale(1) translateY(0);
         }
 
-        /* Grimoire Tablets */
+        /* Grimoire Tablets with Cursor Candle Spotlight */
         .grimoire-tablet {
             position: relative;
             overflow: hidden;
             background: rgba(6, 7, 14, 0.92);
             border: 1px solid rgba(var(--glow-rgb), 0.28);
             transition: border-color 0.35s, transform 0.35s, box-shadow 0.35s;
+        }
+        .grimoire-tablet::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: radial-gradient(260px circle at var(--spot-x, 50%) var(--spot-y, 50%), rgba(var(--glow-rgb), 0.22), transparent 75%);
+            opacity: 0;
+            transition: opacity 0.25s ease;
+        }
+        .grimoire-tablet:hover::before {
+            opacity: 1;
         }
         .grimoire-tablet:hover {
             border-color: var(--primary);
@@ -264,9 +275,9 @@
 <body data-lord="nox">
 
     <!-- =================================================================
-         ZERO-LAG CUSTOM CURSOR (DYNAMICALLY CHANGES SIGIL PER LORD)
+         ZERO-LAG CUSTOM CURSOR (DIRECT CHILD OF BODY — NEVER AFFECTED BY SCROLL!)
          ================================================================= -->
-    <div id="zero-lag-cursor" class="hidden md:block">
+    <div id="custom-cursor" class="hidden md:block">
         <div id="cursor-inner-scale">
             <!-- NOX CURSOR: Starlight Gold & Violet Singularity Ocular -->
             <svg id="cursor-svg-nox" viewBox="0 0 100 100" class="w-full h-full">
@@ -422,32 +433,29 @@
                 </div>
                 <div class="hidden xl:block">
                     <div class="font-display text-xs tracking-widest text-white glitch-heading">FULL WARDENS</div>
-                    <div id="header-active-lord" class="font-mono text-[10px] tracking-[0.15em] lord-text uppercase">
-                        ДОМИНАНТА: NOX
-                    </div>
-                </div>
-            </div>
-
-            <!-- 6 Tabs Navigation (Hub + 3 Personal Lord Realms + Grimoire + Eternal Altar) -->
+            <!-- Navigation Tabs (Hub + 3 Personal Lord Realms + Oracle + Grimoire + Eternal Altar) -->
             <nav class="flex items-center gap-1 sm:gap-1.5 overflow-x-auto py-1">
-                <button data-target="dim-triumvirate" data-nav-lord="" class="dim-tab-btn px-2.5 sm:px-3.5 py-2 rounded-lg font-cinzel text-[10px] sm:text-xs tracking-wider uppercase border lord-border bg-white/10 text-white transition-all whitespace-nowrap">
+                <button data-target="dim-triumvirate" data-nav-lord="" class="dim-tab-btn px-2.5 sm:px-3 py-2 rounded-lg font-cinzel text-[10px] sm:text-xs tracking-wider uppercase border lord-border bg-white/10 text-white transition-all whitespace-nowrap">
                     I. Триумвират
                 </button>
-                <button data-target="dim-nox" data-nav-lord="nox" class="dim-tab-btn px-2.5 sm:px-3.5 py-2 rounded-lg font-cinzel text-[10px] sm:text-xs tracking-wider uppercase border border-amber-500/30 text-amber-300/80 hover:text-amber-300 hover:bg-indigo-950/60 transition-all whitespace-nowrap">
+                <button data-target="dim-nox" data-nav-lord="nox" class="dim-tab-btn px-2.5 sm:px-3 py-2 rounded-lg font-cinzel text-[10px] sm:text-xs tracking-wider uppercase border border-amber-500/30 text-amber-300/80 hover:text-amber-300 hover:bg-indigo-950/60 transition-all whitespace-nowrap">
                     ✦ Обитель Nox
                 </button>
-                <button data-target="dim-silentii" data-nav-lord="silentii" class="dim-tab-btn px-2.5 sm:px-3.5 py-2 rounded-lg font-cinzel text-[10px] sm:text-xs tracking-wider uppercase border border-red-500/30 text-red-400/80 hover:text-white hover:bg-red-950/60 transition-all whitespace-nowrap">
+                <button data-target="dim-silentii" data-nav-lord="silentii" class="dim-tab-btn px-2.5 sm:px-3 py-2 rounded-lg font-cinzel text-[10px] sm:text-xs tracking-wider uppercase border border-red-500/30 text-red-400/80 hover:text-white hover:bg-red-950/60 transition-all whitespace-nowrap">
                     🔥 Горнило Silentii
                 </button>
-                <button data-target="dim-vitae" data-nav-lord="vitae" class="dim-tab-btn px-2.5 sm:px-3.5 py-2 rounded-lg font-cinzel text-[10px] sm:text-xs tracking-wider uppercase border border-lime-500/30 text-lime-400/80 hover:text-lime-300 hover:bg-lime-950/60 transition-all whitespace-nowrap">
+                <button data-target="dim-vitae" data-nav-lord="vitae" class="dim-tab-btn px-2.5 sm:px-3 py-2 rounded-lg font-cinzel text-[10px] sm:text-xs tracking-wider uppercase border border-lime-500/30 text-lime-400/80 hover:text-lime-300 hover:bg-lime-950/60 transition-all whitespace-nowrap">
                     💀 Некро-Цех Vitae
                 </button>
-                <button data-target="dim-grimoire" data-nav-lord="" class="dim-tab-btn px-2.5 sm:px-3.5 py-2 rounded-lg font-cinzel text-[10px] sm:text-xs tracking-wider uppercase border border-transparent text-slate-400 hover:text-white transition-all whitespace-nowrap">
-                    V. Скрижали Табу
+                <button data-target="dim-oracle" data-nav-lord="" class="dim-tab-btn px-2.5 sm:px-3 py-2 rounded-lg font-cinzel text-[10px] sm:text-xs tracking-wider uppercase border border-transparent text-slate-400 hover:text-white transition-all whitespace-nowrap">
+                    II. Оракул Абсурда
                 </button>
-                <button data-target="dim-altar" data-nav-lord="" class="dim-tab-btn px-2.5 sm:px-3.5 py-2 rounded-lg font-cinzel text-[10px] sm:text-xs tracking-wider uppercase border border-transparent text-slate-400 hover:text-white transition-all whitespace-nowrap flex items-center gap-1.5">
+                <button data-target="dim-grimoire" data-nav-lord="" class="dim-tab-btn px-2.5 sm:px-3 py-2 rounded-lg font-cinzel text-[10px] sm:text-xs tracking-wider uppercase border border-transparent text-slate-400 hover:text-white transition-all whitespace-nowrap">
+                    III. Скрижали Табу
+                </button>
+                <button data-target="dim-altar" data-nav-lord="" class="dim-tab-btn px-2.5 sm:px-3 py-2 rounded-lg font-cinzel text-[10px] sm:text-xs tracking-wider uppercase border border-transparent text-slate-400 hover:text-white transition-all whitespace-nowrap flex items-center gap-1.5">
                     <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-                    VI. Вечный Алтарь
+                    IV. Вечный Алтарь
                 </button>
             </nav>
 
@@ -459,8 +467,11 @@
     </header>
 
     <!-- =================================================================
-         MAIN MULTI-DIMENSIONAL SANCTUM CONTAINER
+         ISOLATED WARP WRAPPER FOR ALL SCREEN-SHAKING & REALITY DISTORTIONS
+         Keeping transforms on #site-warp-wrapper guarantees #custom-cursor
+         stays 100% locked to viewport coordinates even when scrolling down!
          ================================================================= -->
+    <div id="site-warp-wrapper">
     <main id="sanctum-wrapper" class="relative z-30 pt-28 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
 
         <!-- =============================================================
@@ -894,7 +905,96 @@
         </section>
 
         <!-- =============================================================
-             ВКЛАДКА V: ЗАПРЕТНЫЕ СКРИЖАЛИ (GRIMOIRE & TABOO)
+             ВКЛАДКА II: ОРАКУЛ АБСУРДА (ASTROLABE OF THE UNSEEN SOURCE)
+             ============================================================= -->
+        <section id="dim-oracle" class="dimension-view">
+            <div class="text-center max-w-3xl mx-auto mb-8">
+                <span class="font-mono text-xs uppercase tracking-[0.35em] lord-text block mb-2">
+                    [ ИЗМЕРЕНИЕ II • АСТРОЛЯБИЯ НЕЗРИМОГО ИСХОДНИКА • ВМЕСТО ПОИСКОВОЙ СТРОКИ ]
+                </span>
+                <h2 class="font-display text-3xl sm:text-5xl uppercase tracking-wider text-white mb-3">
+                    Оракул Абсурда
+                </h2>
+                <p class="text-slate-300 text-lg italic">
+                    Стражи не ищут буквами — они вращают кольца мироздания и настраивают степень шакализации эфира, чтобы вычислить координаты потерянного Фулла.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <!-- Rotating Astrolabe Mechanism (6 Cols) -->
+                <div class="lg:col-span-6 lord-panel rounded-3xl p-6 flex flex-col items-center justify-center min-h-[420px]">
+                    <div class="relative w-64 h-64 sm:w-72 sm:h-72 flex items-center justify-center">
+                        <svg viewBox="0 0 300 300" class="w-full h-full">
+                            <g id="oracle-ring-outer" style="transform-origin: 150px 150px; transition: transform 0.3s ease;">
+                                <circle cx="150" cy="150" r="136" fill="none" stroke="#fbbf24" stroke-width="2" stroke-dasharray="14 8"/>
+                                <polygon points="150,8 158,28 142,28" fill="#fbbf24"/>
+                                <polygon points="150,292 158,272 142,272" fill="#a855f7"/>
+                            </g>
+                            <g id="oracle-ring-mid" style="transform-origin: 150px 150px; transition: transform 0.3s ease;">
+                                <circle cx="150" cy="150" r="102" fill="none" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="10 6"/>
+                                <rect x="78" y="78" width="144" height="144" fill="none" stroke="#ffffff" stroke-width="1.2" opacity="0.6"/>
+                            </g>
+                            <g id="oracle-ring-inner" style="transform-origin: 150px 150px; transition: transform 0.3s ease;">
+                                <circle cx="150" cy="150" r="66" fill="none" stroke="#39ff14" stroke-width="2.5" stroke-dasharray="8 8"/>
+                                <polygon points="150,90 202,180 98,180" fill="none" stroke="#39ff14" stroke-width="1.8"/>
+                            </g>
+                            <circle cx="150" cy="150" r="24" fill="#050509" stroke="#ffffff" stroke-width="2"/>
+                            <circle cx="150" cy="150" r="8" fill="var(--primary)"/>
+                        </svg>
+                    </div>
+                    <div class="font-mono text-xs lord-text tracking-widest uppercase mt-4">
+                        РЕЗОНАНС КОЛЕЦ: <span id="oracle-resonance-val" class="text-white font-bold">777.4 ГЦ</span>
+                    </div>
+                </div>
+
+                <!-- Absurd Mystical Sliders & Prophecy Output (6 Cols) -->
+                <div class="lg:col-span-6 lord-panel rounded-3xl p-6 sm:p-8 space-y-5">
+                    <h3 class="font-cinzel text-xl sm:text-2xl text-white uppercase tracking-wider border-b border-white/10 pb-3">
+                        Рычаги Искажения Эфира
+                    </h3>
+
+                    <div class="space-y-4 font-mono text-xs">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-amber-300">1. СТЕПЕНЬ ШАКАЛИЗАЦИИ ПЕРВОИСТОЧНИКА:</span>
+                                <span id="val-shakal" class="text-white font-bold">144p → 16K</span>
+                            </div>
+                            <input id="slider-shakal" type="range" min="1" max="360" value="120" class="w-full accent-amber-400">
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-red-400">2. ИНДЕКС ВЫЖИГАНИЯ ВОТЕРМАРОК (SILENTII):</span>
+                                <span id="val-kascher" class="text-white font-bold">99.8% ПЕПЛА</span>
+                            </div>
+                            <input id="slider-kascher" type="range" min="1" max="360" value="240" class="w-full accent-red-500">
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-lime-400">3. ОБОРОТЫ КОСТЯНЫХ ШЕСТЕРЁН (VITAE):</span>
+                                <span id="val-necro" class="text-white font-bold">666 ОБ/ВЕК</span>
+                            </div>
+                            <input id="slider-necro" type="range" min="1" max="360" value="180" class="w-full accent-lime-400">
+                        </div>
+                    </div>
+
+                    <button id="btn-divine-oracle" class="w-full py-4 px-5 rounded-xl font-cinzel font-bold text-xs uppercase tracking-[0.2em] bg-white/10 hover:bg-white/20 text-white border lord-border shadow-[0_0_25px_rgba(var(--glow-rgb),0.45)] transition-all">
+                        🔮 Испросить Безумный Вердикт Оракула
+                    </button>
+
+                    <div class="p-4 rounded-2xl bg-black/90 border lord-border font-mono text-xs space-y-1.5">
+                        <div class="lord-text font-bold">ПРОРОЧЕСТВО АСТРОЛЯБИИ:</div>
+                        <p id="oracle-prophecy-output" class="text-slate-200 leading-relaxed">
+                            «Когда три кольца сойдутся в зените, ссылка всплывёт на седьмой странице забытого форума без единой потери битрейта...»
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =============================================================
+             ВКЛАДКА III: ЗАПРЕТНЫЕ СКРИЖАЛИ (GRIMOIRE & TABOO)
              ============================================================= -->
         <section id="dim-grimoire" class="dimension-view">
             <div class="flex flex-col md:flex-row items-center justify-between gap-6 mb-10">
@@ -1111,24 +1211,28 @@
             <span class="lord-text font-bold">DOMINUS NOX • DOMINUS SILENTII • DOMINUS VITAE</span>
         </div>
     </footer>
+    </div><!-- /#site-warp-wrapper -->
 
     <!-- =================================================================
          MASTER JAVASCRIPT ENGINE:
-         - ZERO-LAG CURSOR
+         - ZERO-LAG CURSOR (100% SCROLL-PROOF)
          - GLOBAL FULL-SCREEN FIRE / NECRO-SOULS / STAR VORTEX CANVAS
-         - 3 PERSONAL LORD REALM SIMULATORS
+         - 3 PERSONAL LORD REALM SIMULATORS + ORACLE + GRIMOIRE
          - INSATIABLE RUNIC ALTAR
          ================================================================= -->
     <script>
         window.onload = function () {
             /* -----------------------------------------------------------
-               1. ZERO-LAG HARDWARE-ACCELERATED CURSOR
-                  Updated directly inside pointermove/mousemove with translate3d
+               1. ZERO-LAG HARDWARE-ACCELERATED CURSOR (SCROLL-PROOF)
+                  Because #custom-cursor is outside #site-warp-wrapper and
+                  <body> has NO transform/filter, position:fixed stays locked
+                  to viewport coordinates (clientX, clientY) at any scroll!
                ----------------------------------------------------------- */
-            const cursorRoot = document.getElementById('zero-lag-cursor');
+            const cursorRoot = document.getElementById('custom-cursor');
             const svgNox = document.getElementById('cursor-svg-nox');
             const svgSilentii = document.getElementById('cursor-svg-silentii');
             const svgVitae = document.getElementById('cursor-svg-vitae');
+            const siteWarpWrapper = document.getElementById('site-warp-wrapper');
 
             let mouseX = window.innerWidth / 2;
             let mouseY = window.innerHeight / 2;
@@ -1144,8 +1248,8 @@
                 mouseY = y;
                 mouseSpeed = Math.hypot(mouseX - prevMouseX, mouseY - prevMouseY);
 
-                // Direct GPU transform with ZERO smoothing/transition lag!
-                cursorRoot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
+                // Direct GPU transform with ZERO smoothing/transition lag and exact centering!
+                cursorRoot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
 
                 cursorSlashTrail.push({ x: mouseX, y: mouseY, life: 1.0 });
                 if (cursorSlashTrail.length > 20) cursorSlashTrail.shift();
@@ -1155,7 +1259,24 @@
                 updateCursorInstant(e.clientX, e.clientY);
             }, { passive: true });
 
-            document.querySelectorAll('button, a, article, .grimoire-tablet').forEach((el) => {
+            window.addEventListener('mousemove', (e) => {
+                updateCursorInstant(e.clientX, e.clientY);
+            }, { passive: true });
+
+            window.addEventListener('scroll', () => {
+                cursorRoot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+            }, { passive: true });
+
+            // Spotlight candle coordinates for Grimoire tablets
+            document.querySelectorAll('.grimoire-tablet').forEach((tablet) => {
+                tablet.addEventListener('pointermove', (e) => {
+                    const rect = tablet.getBoundingClientRect();
+                    tablet.style.setProperty('--spot-x', `${e.clientX - rect.left}px`);
+                    tablet.style.setProperty('--spot-y', `${e.clientY - rect.top}px`);
+                });
+            });
+
+            document.querySelectorAll('button, a, article, input, .grimoire-tablet').forEach((el) => {
                 el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
                 el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
             });
@@ -1290,9 +1411,11 @@
             const cataclysmFlash = document.getElementById('cataclysm-flash');
 
             function triggerScreenRupture(color = 'rgba(255,255,255,0.35)') {
-                document.body.classList.remove('reality-rupture');
-                void document.body.offsetWidth;
-                document.body.classList.add('reality-rupture');
+                if (siteWarpWrapper) {
+                    siteWarpWrapper.classList.remove('reality-rupture');
+                    void siteWarpWrapper.offsetWidth;
+                    siteWarpWrapper.classList.add('reality-rupture');
+                }
 
                 cataclysmFlash.style.background = color;
                 cataclysmFlash.style.opacity = '1';
@@ -1421,553 +1544,65 @@
             }, 1400);
 
             /* -----------------------------------------------------------
-               5. GLOBAL FULL-SCREEN MADNESS CANVAS
-                  Dramatically transforms the whole screen per Lord:
-                  - NOX: Golden constellations + Indigo/Gold gravitational vortex
-                  - SILENTII: Full-width rising wall of Crimson/Black Fire + VHS glitch slices
-                  - VITAE: Writhing Spectral Green Necro-Souls with long ribbon tails + gears
+               9. TAB II (ORACLE) & TAB III (BREAK TABOO)
                ----------------------------------------------------------- */
-            const bgCanvas = document.getElementById('madness-canvas');
-            const bgCtx = bgCanvas.getContext('2d');
-            let globalEntities = [];
+            const ringOuter = document.getElementById('oracle-ring-outer');
+            const ringMid = document.getElementById('oracle-ring-mid');
+            const ringInner = document.getElementById('oracle-ring-inner');
+            const sliderShakal = document.getElementById('slider-shakal');
+            const sliderKascher = document.getElementById('slider-kascher');
+            const sliderNecro = document.getElementById('slider-necro');
 
-            function resizeBgCanvas() {
-                bgCanvas.width = window.innerWidth;
-                bgCanvas.height = window.innerHeight;
-            }
-            window.addEventListener('resize', resizeBgCanvas);
-            resizeBgCanvas();
-
-            class GlobalMadnessEntity {
-                constructor(isBurst = false, bx = 0, by = 0) {
-                    this.reset(isBurst, bx, by);
-                }
-                reset(isBurst = false, bx = 0, by = 0) {
-                    this.x = isBurst ? bx : Math.random() * bgCanvas.width;
-                    this.y = isBurst ? by : Math.random() * bgCanvas.height;
-                    this.vx = isBurst ? (Math.random() - 0.5) * 14 : (Math.random() - 0.5) * 1.6;
-                    this.vy = isBurst ? (Math.random() - 0.5) * 14 : -Math.random() * 2.5 - 0.8;
-                    this.size = Math.random() * 4.5 + 1.8;
-                    this.angle = Math.random() * Math.PI * 2;
-                    this.spin = (Math.random() - 0.5) * 0.08;
-                    this.rand = Math.random();
-                    this.isBurst = isBurst;
-                    this.life = 1.0;
-                    this.history = [];
-                }
-                update() {
-                    if (this.isBurst) {
-                        this.x += this.vx;
-                        this.y += this.vy;
-                        this.vx *= 0.94;
-                        this.vy *= 0.94;
-                        this.life -= 0.02;
-                        return;
-                    }
-
-                    if (activeLord === 'nox') {
-                        // Swirl into cursor black hole with golden constellation connections
-                        const dx = mouseX - this.x;
-                        const dy = mouseY - this.y;
-                        const dist = Math.hypot(dx, dy) || 1;
-                        if (dist < 420) {
-                            this.x += (dx / dist) * 1.9 - (dy / dist) * 2.8;
-                            this.y += (dy / dist) * 1.9 + (dx / dist) * 2.8;
-                        } else {
-                            this.x += this.vx * 0.5;
-                            this.y += this.vy * 0.4;
-                        }
-                    } else if (activeLord === 'silentii') {
-                        // Aggressive Rising Wall of Crimson-Black Fire from bottom of screen
-                        this.y -= Math.abs(this.vy) * 2.8 + 1.4;
-                        this.x += Math.sin(Date.now() * 0.006 + this.y * 0.025) * 2.2;
-                        if (this.y < -30) {
-                            this.y = bgCanvas.height + 20;
-                            this.x = Math.random() * bgCanvas.width;
-                        }
-                    } else if (activeLord === 'vitae') {
-                        // Writhing Necro-Souls with undulating ribbon trails attracted to cursor
-                        this.angle += 0.06;
-                        const dx = mouseX - this.x;
-                        const dy = mouseY - this.y;
-                        const dist = Math.hypot(dx, dy) || 1;
-                        if (dist < 360) {
-                            this.x += (dx / dist) * 2.2 + Math.cos(this.angle) * 2.5;
-                            this.y += (dy / dist) * 2.2 + Math.sin(this.angle) * 2.5;
-                        } else {
-                            this.x += Math.cos(this.angle + this.rand * 6) * 2.4;
-                            this.y -= Math.abs(this.vy) * 1.2;
-                        }
-                        this.history.push({ x: this.x, y: this.y });
-                        if (this.history.length > 14) this.history.shift();
-                    }
-
-                    if (this.y < -30) this.y = bgCanvas.height + 25;
-                    if (this.y > bgCanvas.height + 30) this.y = -25;
-                    if (this.x < -30) this.x = bgCanvas.width + 25;
-                    if (this.x > bgCanvas.width + 30) this.x = -25;
-                }
-                draw() {
-                    const alpha = this.isBurst ? Math.max(0, this.life) : 0.85;
-
-                    if (activeLord === 'nox') {
-                        bgCtx.fillStyle = this.rand > 0.32
-                            ? `rgba(251, 191, 36, ${alpha})`
-                            : `rgba(168, 85, 247, ${alpha})`;
-                        bgCtx.beginPath();
-                        bgCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                        bgCtx.fill();
-                    } else if (activeLord === 'silentii') {
-                        // Draw rising roaring flame tongues at bottom & embers across screen
-                        const flameScale = this.y > bgCanvas.height * 0.65 ? 2.6 : 1.3;
-                        const rSize = this.size * flameScale;
-                        if (this.rand > 0.87) {
-                            bgCtx.fillStyle = `rgba(255, 255, 255, ${alpha})`; // Stark white spark
-                        } else if (this.rand > 0.25) {
-                            bgCtx.fillStyle = `rgba(220, 38, 38, ${alpha * 0.88})`; // Crimson flame
-                        } else {
-                            bgCtx.fillStyle = `rgba(15, 2, 4, ${alpha * 0.95})`; // Black ash flame
-                        }
-                        bgCtx.beginPath();
-                        bgCtx.moveTo(this.x, this.y - rSize * 2.6);
-                        bgCtx.lineTo(this.x + rSize * 1.4, this.y + rSize);
-                        bgCtx.lineTo(this.x - rSize * 1.4, this.y + rSize);
-                        bgCtx.closePath();
-                        bgCtx.fill();
-                    } else if (activeLord === 'vitae') {
-                        // Draw Spectral Necro-Soul wraith ribbon + glowing skull/orb head (or subtle bronze gear)
-                        if (this.rand > 0.88) {
-                            bgCtx.save();
-                            bgCtx.translate(this.x, this.y);
-                            bgCtx.rotate(this.angle);
-                            bgCtx.strokeStyle = `rgba(180, 135, 50, ${alpha * 0.7})`;
-                            bgCtx.lineWidth = 2;
-                            bgCtx.setLineDash([4, 3]);
-                            bgCtx.beginPath();
-                            bgCtx.arc(0, 0, this.size * 3.2, 0, Math.PI * 2);
-                            bgCtx.stroke();
-                            bgCtx.restore();
-                        } else {
-                            if (this.history.length > 2) {
-                                bgCtx.beginPath();
-                                bgCtx.moveTo(this.history[0].x, this.history[0].y);
-                                for (let k = 1; k < this.history.length; k++) {
-                                    bgCtx.lineTo(this.history[k].x, this.history[k].y);
-                                }
-                                bgCtx.strokeStyle = `rgba(57, 255, 20, ${alpha * 0.45})`;
-                                bgCtx.lineWidth = this.size * 0.9;
-                                bgCtx.stroke();
-                            }
-                            bgCtx.fillStyle = `rgba(57, 255, 20, ${alpha})`;
-                            bgCtx.beginPath();
-                            bgCtx.arc(this.x, this.y, this.size * 1.25, 0, Math.PI * 2);
-                            bgCtx.fill();
-                        }
-                    }
-                }
+            function updateAstrolabeRings() {
+                if (!sliderShakal) return;
+                const v1 = Number(sliderShakal.value);
+                const v2 = Number(sliderKascher.value);
+                const v3 = Number(sliderNecro.value);
+                ringOuter.style.transform = `rotate(${v1}deg)`;
+                ringMid.style.transform = `rotate(${-v2}deg)`;
+                ringInner.style.transform = `rotate(${v3}deg)`;
+                document.getElementById('val-shakal').textContent = `${v1}° КВАНТ`;
+                document.getElementById('val-kascher').textContent = `${(v2 / 3.6).toFixed(1)}% ПЕПЛА`;
+                document.getElementById('val-necro').textContent = `${v3 * 4} ОБ/ВЕК`;
+                document.getElementById('oracle-resonance-val').textContent = `${((v1 + v2 + v3) * 1.37).toFixed(1)} ГЦ`;
             }
 
-            function initGlobalEntities() {
-                globalEntities = [];
-                const count = window.innerWidth < 768 ? 55 : 105;
-                for (let i = 0; i < count; i++) {
-                    globalEntities.push(new GlobalMadnessEntity(false));
-                }
-            }
-            initGlobalEntities();
-
-            function spawnGlobalBurst(x, y, count = 50) {
-                for (let i = 0; i < count; i++) {
-                    globalEntities.push(new GlobalMadnessEntity(true, x, y));
-                }
-            }
-
-            function renderGlobalMadnessLoop() {
-                bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
-
-                // Lord-specific ambient screen effects on Canvas
-                if (activeLord === 'silentii' && Math.random() < 0.18) {
-                    // VHS Horizontal Glitch Slice across screen
-                    const sliceY = Math.random() * bgCanvas.height;
-                    const sliceH = Math.random() * 18 + 2;
-                    bgCtx.fillStyle = Math.random() > 0.75 ? 'rgba(255,255,255,0.12)' : 'rgba(220,38,38,0.18)';
-                    bgCtx.fillRect(0, sliceY, bgCanvas.width, sliceH);
-                }
-
-                for (let i = globalEntities.length - 1; i >= 0; i--) {
-                    const ent = globalEntities[i];
-                    ent.update();
-                    ent.draw();
-
-                    // Nox: Golden Constellation Lines near Cursor Singularity
-                    if (activeLord === 'nox') {
-                        const dMouse = Math.hypot(mouseX - ent.x, mouseY - ent.y);
-                        if (dMouse < 180) {
-                            bgCtx.beginPath();
-                            bgCtx.moveTo(ent.x, ent.y);
-                            bgCtx.lineTo(mouseX, mouseY);
-                            bgCtx.strokeStyle = `rgba(251, 191, 36, ${(1 - dMouse / 180) * 0.45})`;
-                            bgCtx.lineWidth = 1;
-                            bgCtx.stroke();
-                        }
-                    }
-
-                    // Vitae: Crawling Green Bio-Veins latching onto Cursor
-                    if (activeLord === 'vitae') {
-                        const dMouse = Math.hypot(mouseX - ent.x, mouseY - ent.y);
-                        if (dMouse < 190) {
-                            bgCtx.beginPath();
-                            bgCtx.moveTo(ent.x, ent.y);
-                            bgCtx.quadraticCurveTo(
-                                (ent.x + mouseX) / 2 + Math.sin(Date.now() * 0.01) * 22,
-                                (ent.y + mouseY) / 2,
-                                mouseX,
-                                mouseY
-                            );
-                            bgCtx.strokeStyle = `rgba(57, 255, 20, ${(1 - dMouse / 190) * 0.5})`;
-                            bgCtx.lineWidth = 1.3;
-                            bgCtx.stroke();
-                        }
-                    }
-
-                    if (ent.isBurst && ent.life <= 0) {
-                        globalEntities.splice(i, 1);
-                    }
-                }
-
-                // Silentii: Stark White & Crimson Blade Slash Trail behind cursor
-                if (activeLord === 'silentii' && cursorSlashTrail.length > 2) {
-                    for (let i = 1; i < cursorSlashTrail.length; i++) {
-                        const p1 = cursorSlashTrail[i - 1];
-                        const p2 = cursorSlashTrail[i];
-                        p1.life -= 0.05;
-                        if (p1.life > 0) {
-                            bgCtx.beginPath();
-                            bgCtx.moveTo(p1.x, p1.y);
-                            bgCtx.lineTo(p2.x, p2.y);
-                            bgCtx.strokeStyle = i % 3 === 0 ? `rgba(255,255,255,${p1.life})` : `rgba(220,38,38,${p1.life})`;
-                            bgCtx.lineWidth = p1.life * 3.5;
-                            bgCtx.stroke();
-                        }
-                    }
-                }
-
-                requestAnimationFrame(renderGlobalMadnessLoop);
-            }
-            renderGlobalMadnessLoop();
-
-            /* -----------------------------------------------------------
-               6. PERSONAL REALM 1: DOMINUS NOX (BLACK HOLE SIMULATOR)
-               ----------------------------------------------------------- */
-            const noxCanvas = document.getElementById('nox-realm-canvas');
-            const noxCtx = noxCanvas.getContext('2d');
-            let noxStars = [];
-            let noxConsumed = 144;
-
-            function resizeNoxRealmCanvas() {
-                if (!noxCanvas.parentElement) return;
-                noxCanvas.width = noxCanvas.parentElement.clientWidth;
-                noxCanvas.height = noxCanvas.parentElement.clientHeight;
-            }
-
-            function spawnNoxStarCluster(cx, cy, count = 32) {
-                resizeNoxRealmCanvas();
-                const originX = cx || Math.random() * noxCanvas.width;
-                const originY = cy || Math.random() * noxCanvas.height;
-                for (let i = 0; i < count; i++) {
-                    const angle = Math.random() * Math.PI * 2;
-                    const dist = 40 + Math.random() * 160;
-                    noxStars.push({
-                        x: originX + Math.cos(angle) * dist,
-                        y: originY + Math.sin(angle) * dist,
-                        angle: angle,
-                        radius: dist,
-                        size: Math.random() * 3.5 + 1.5,
-                        gold: Math.random() > 0.3
-                    });
-                }
-            }
-            setTimeout(() => spawnNoxStarCluster(220, 220, 65), 150);
-
-            noxCanvas.addEventListener('pointerdown', (e) => {
-                const rect = noxCanvas.getBoundingClientRect();
-                spawnNoxStarCluster(e.clientX - rect.left, e.clientY - rect.top, 35);
-                playRitualPulse(150, 'sine', 0.5);
+            [sliderShakal, sliderKascher, sliderNecro].forEach((sl) => {
+                if (sl) sl.addEventListener('input', updateAstrolabeRings);
             });
 
-            document.getElementById('btn-nox-spawn-star').addEventListener('click', () => {
-                spawnNoxStarCluster(noxCanvas.width * Math.random(), noxCanvas.height * Math.random(), 50);
-                triggerScreenRupture('rgba(251, 191, 36, 0.35)');
-                playRitualPulse(135, 'sawtooth', 0.8);
-                document.getElementById('nox-realm-log').textContent =
-                    `[СИНГУЛЯРНОСТЬ] Золотая сверхновая разорвана приливными силами Dominus Nox! Извлечено ${Math.floor(100 + Math.random() * 900)} ГБ первозданного 16K-исходника.`;
-            });
+            const oracleProphecies = [
+                '«Dominus Nox узрел в сингулярности: искомый оригинал хранится на зашифрованном сервере в 16K без единой склейки.»',
+                '«Dominus Silentii выжег 400 пустых комментариев и явил чистый магнит-слепок Первоисточника в белом пламени.»',
+                '«Костяные шестерни Dominus Vitae провернулись вспять: удалённый в 2011 году архив воскрешён роем салатовых душ!»'
+            ];
 
-            document.getElementById('btn-nox-warp-screen').addEventListener('click', () => {
-                switchLordRealm('nox', true);
-                spawnGlobalBurst(window.innerWidth / 2, window.innerHeight / 2, 80);
-            });
-
-            function animateNoxRealm() {
-                if (noxCanvas.width > 0) {
-                    noxCtx.fillStyle = 'rgba(4, 7, 26, 0.22)';
-                    noxCtx.fillRect(0, 0, noxCanvas.width, noxCanvas.height);
-
-                    const cx = noxCanvas.width / 2;
-                    const cy = noxCanvas.height / 2;
-
-                    // Draw Central Quasar Black Hole
-                    const grad = noxCtx.createRadialGradient(cx, cy, 12, cx, cy, 95);
-                    grad.addColorStop(0, '#000000');
-                    grad.addColorStop(0.35, '#4c1d95');
-                    grad.addColorStop(0.65, 'rgba(251, 191, 36, 0.45)');
-                    grad.addColorStop(1, 'transparent');
-                    noxCtx.fillStyle = grad;
-                    noxCtx.beginPath();
-                    noxCtx.arc(cx, cy, 95, 0, Math.PI * 2);
-                    noxCtx.fill();
-
-                    noxCtx.strokeStyle = '#fbbf24';
-                    noxCtx.lineWidth = 2;
-                    noxCtx.beginPath();
-                    noxCtx.arc(cx, cy, 26, 0, Math.PI * 2);
-                    noxCtx.stroke();
-
-                    for (let i = noxStars.length - 1; i >= 0; i--) {
-                        const s = noxStars[i];
-                        const dx = cx - s.x;
-                        const dy = cy - s.y;
-                        const dist = Math.hypot(dx, dy) || 1;
-
-                        // Spiral spaghettification towards center
-                        s.x += (dx / dist) * 1.8 - (dy / dist) * 3.6;
-                        s.y += (dy / dist) * 1.8 + (dx / dist) * 3.6;
-
-                        noxCtx.fillStyle = s.gold ? '#fbbf24' : '#a855f7';
-                        noxCtx.beginPath();
-                        noxCtx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
-                        noxCtx.fill();
-
-                        if (dist < 24) {
-                            noxStars.splice(i, 1);
-                            noxConsumed++;
-                            document.getElementById('nox-stars-consumed').textContent = `ПОГЛОЩЕНО ЗВЁЗД: ${noxConsumed}`;
-                        }
-                    }
-
-                    if (noxStars.length < 35) {
-                        spawnNoxStarCluster(cx, cy, 12);
-                    }
-                }
-                requestAnimationFrame(animateNoxRealm);
-            }
-            animateNoxRealm();
-
-            /* -----------------------------------------------------------
-               7. PERSONAL REALM 2: DOMINUS SILENTII (PYRE OF SILENCE)
-               ----------------------------------------------------------- */
-            const silentiiCanvas = document.getElementById('silentii-realm-canvas');
-            const silentiiCtx = silentiiCanvas.getContext('2d');
-            let pyreFlames = [];
-            let burnedHeresies = 666;
-            let pyreBoost = 1.0;
-
-            function resizeSilentiiRealmCanvas() {
-                if (!silentiiCanvas.parentElement) return;
-                silentiiCanvas.width = silentiiCanvas.parentElement.clientWidth;
-                silentiiCanvas.height = silentiiCanvas.parentElement.clientHeight;
-            }
-
-            function initPyreFlames() {
-                pyreFlames = [];
-                for (let i = 0; i < 85; i++) {
-                    pyreFlames.push({
-                        x: Math.random() * 700,
-                        y: Math.random() * 500,
-                        vy: Math.random() * 3.5 + 1.5,
-                        size: Math.random() * 14 + 5,
-                        type: Math.random()
-                    });
-                }
-            }
-            initPyreFlames();
-
-            document.querySelectorAll('.btn-burn-heresy').forEach((btn) => {
-                btn.addEventListener('click', () => {
-                    const heresy = btn.getAttribute('data-heresy');
-                    burnedHeresies++;
-                    pyreBoost = 2.8;
-                    setTimeout(() => { pyreBoost = 1.0; }, 1600);
-
-                    switchLordRealm('silentii', true);
-                    spawnGlobalBurst(window.innerWidth / 2, window.innerHeight * 0.75, 75);
-
-                    document.getElementById('silentii-burned-count').textContent = burnedHeresies;
-                    document.getElementById('silentii-temp-readout').textContent = `${Math.floor(12000 + Math.random() * 80000)} K`;
-                    document.getElementById('silentii-pyre-chant').textContent = '🔥 ЕРЕСЬ ОБРАЩЕНА В БЕЛЫЙ ПЕПЕЛ! 🔥';
-                    document.getElementById('silentii-realm-log').textContent =
-                        `[СОЖЖЕНО #${burnedHeresies}] «${heresy}» бесследно уничтожено в чёрно-багровом горниле Dominus Silentii.`;
+            const btnOracle = document.getElementById('btn-divine-oracle');
+            if (btnOracle) {
+                btnOracle.addEventListener('click', () => {
+                    triggerScreenRupture('rgba(var(--glow-rgb), 0.45)');
+                    playRitualPulse(175, 'triangle', 0.8);
+                    document.getElementById('oracle-prophecy-output').textContent =
+                        oracleProphecies[Math.floor(Math.random() * oracleProphecies.length)];
                 });
-            });
-
-            function animateSilentiiRealm() {
-                if (silentiiCanvas.width > 0) {
-                    silentiiCtx.fillStyle = 'rgba(6, 1, 2, 0.28)';
-                    silentiiCtx.fillRect(0, 0, silentiiCanvas.width, silentiiCanvas.height);
-
-                    for (let i = 0; i < pyreFlames.length; i++) {
-                        const f = pyreFlames[i];
-                        f.y -= f.vy * pyreBoost;
-                        f.x += Math.sin(Date.now() * 0.008 + f.y * 0.04) * 2.2;
-
-                        if (f.y < -20) {
-                            f.y = silentiiCanvas.height + 20;
-                            f.x = Math.random() * silentiiCanvas.width;
-                        }
-
-                        if (f.type > 0.86) {
-                            silentiiCtx.fillStyle = 'rgba(255, 255, 255, 0.95)';
-                        } else if (f.type > 0.3) {
-                            silentiiCtx.fillStyle = 'rgba(220, 38, 38, 0.78)';
-                        } else {
-                            silentiiCtx.fillStyle = 'rgba(18, 2, 4, 0.92)';
-                        }
-
-                        const s = f.size * (pyreBoost > 1 ? 1.45 : 1);
-                        silentiiCtx.beginPath();
-                        silentiiCtx.moveTo(f.x, f.y - s * 2.2);
-                        silentiiCtx.lineTo(f.x + s, f.y + s);
-                        silentiiCtx.lineTo(f.x - s, f.y + s);
-                        silentiiCtx.closePath();
-                        silentiiCtx.fill();
-                    }
-                }
-                requestAnimationFrame(animateSilentiiRealm);
-            }
-            animateSilentiiRealm();
-
-            /* -----------------------------------------------------------
-               8. PERSONAL REALM 3: DOMINUS VITAE (NECRO-SOUL REACTOR)
-               ----------------------------------------------------------- */
-            const vitaeCanvas = document.getElementById('vitae-realm-canvas');
-            const vitaeCtx = vitaeCanvas.getContext('2d');
-            let necroWraiths = [];
-            let gearRotation = 0;
-
-            function resizeVitaeRealmCanvas() {
-                if (!vitaeCanvas.parentElement) return;
-                vitaeCanvas.width = vitaeCanvas.parentElement.clientWidth;
-                vitaeCanvas.height = vitaeCanvas.parentElement.clientHeight;
             }
 
-            function spawnNecroWraiths(count = 28) {
-                for (let i = 0; i < count; i++) {
-                    necroWraiths.push({
-                        x: Math.random() * (vitaeCanvas.width || 600),
-                        y: Math.random() * (vitaeCanvas.height || 450),
-                        angle: Math.random() * Math.PI * 2,
-                        speed: 1.8 + Math.random() * 2.2,
-                        tail: []
-                    });
-                }
-                document.getElementById('vitae-souls-count').textContent = `НЕКРО-ДУШ В КОНТУРЕ: ${necroWraiths.length}`;
-            }
-            spawnNecroWraiths(32);
-
-            document.getElementById('btn-vitae-resurrect').addEventListener('click', () => {
-                switchLordRealm('vitae', true);
-                spawnNecroWraiths(18);
-                spawnGlobalBurst(window.innerWidth / 2, window.innerHeight / 2, 70);
-                document.getElementById('vitae-bpm-readout').textContent = `${Math.floor(160 + Math.random() * 80)} УД/МИН`;
-                document.getElementById('vitae-realm-log').textContent =
-                    `[ВОСКРЕШЕНИЕ] Рой салатовых некро-душ оплёл мёртвый сектор! Костяные шестерни Dominus Vitae восстановили утраченный оригинал в 8K.`;
-            });
-
-            document.getElementById('btn-vitae-overclock-gears').addEventListener('click', () => {
-                playRitualPulse(195, 'sawtooth', 0.9);
-                triggerScreenRupture('rgba(57, 255, 20, 0.45)');
-                if (necroWraiths.length > 60) necroWraiths.splice(0, 25);
-                document.getElementById('vitae-realm-log').textContent =
-                    `[ХРОНО-СДВИГ] Бронзовые шестерни провернулись против часовой стрелки на 15 лет назад. Все удалённые раздачи снова живы!`;
-            });
-
-            function animateVitaeRealm() {
-                if (vitaeCanvas.width > 0) {
-                    vitaeCtx.fillStyle = 'rgba(2, 8, 3, 0.24)';
-                    vitaeCtx.fillRect(0, 0, vitaeCanvas.width, vitaeCanvas.height);
-
-                    const cx = vitaeCanvas.width / 2;
-                    const cy = vitaeCanvas.height / 2;
-                    gearRotation += 0.015;
-
-                    // Draw Central Biomechanical Clockwork Gear & Necro Ring
-                    vitaeCtx.save();
-                    vitaeCtx.translate(cx, cy);
-                    vitaeCtx.rotate(gearRotation);
-                    vitaeCtx.strokeStyle = 'rgba(180, 130, 50, 0.55)';
-                    vitaeCtx.lineWidth = 6;
-                    vitaeCtx.setLineDash([12, 10]);
-                    vitaeCtx.beginPath();
-                    vitaeCtx.arc(0, 0, 82, 0, Math.PI * 2);
-                    vitaeCtx.stroke();
-                    vitaeCtx.restore();
-
-                    vitaeCtx.strokeStyle = '#39ff14';
-                    vitaeCtx.lineWidth = 2;
-                    vitaeCtx.beginPath();
-                    vitaeCtx.arc(cx, cy, 52, 0, Math.PI * 2);
-                    vitaeCtx.stroke();
-
-                    for (let i = 0; i < necroWraiths.length; i++) {
-                        const w = necroWraiths[i];
-                        w.angle += (Math.random() - 0.5) * 0.25;
-                        w.x += Math.cos(w.angle) * w.speed + (cx - w.x) * 0.008;
-                        w.y += Math.sin(w.angle) * w.speed + (cy - w.y) * 0.008;
-
-                        w.tail.push({ x: w.x, y: w.y });
-                        if (w.tail.length > 16) w.tail.shift();
-
-                        if (w.tail.length > 2) {
-                            vitaeCtx.beginPath();
-                            vitaeCtx.moveTo(w.tail[0].x, w.tail[0].y);
-                            for (let k = 1; k < w.tail.length; k++) {
-                                vitaeCtx.lineTo(w.tail[k].x, w.tail[k].y);
-                            }
-                            vitaeCtx.strokeStyle = 'rgba(57, 255, 20, 0.55)';
-                            vitaeCtx.lineWidth = 2.5;
-                            vitaeCtx.stroke();
-                        }
-
-                        // Soul Skull Head
-                        vitaeCtx.fillStyle = '#39ff14';
-                        vitaeCtx.beginPath();
-                        vitaeCtx.arc(w.x, w.y, 4, 0, Math.PI * 2);
-                        vitaeCtx.fill();
-                    }
-                }
-                requestAnimationFrame(animateVitaeRealm);
-            }
-            animateVitaeRealm();
-
-            /* -----------------------------------------------------------
-               9. TAB V: BREAK TABOO (CURSE OF THE CROPPER)
-               ----------------------------------------------------------- */
             const tabooOverlay = document.getElementById('taboo-curse-overlay');
             document.getElementById('btn-break-taboo').addEventListener('click', () => {
                 playRitualPulse(60, 'sawtooth', 2.4);
-                document.body.classList.add('taboo-broken');
+                if (siteWarpWrapper) siteWarpWrapper.classList.add('taboo-broken');
                 tabooOverlay.classList.remove('hidden');
                 tabooOverlay.classList.add('flex');
 
                 setTimeout(() => {
-                    document.body.classList.remove('taboo-broken');
+                    if (siteWarpWrapper) siteWarpWrapper.classList.remove('taboo-broken');
                     tabooOverlay.classList.add('hidden');
                     tabooOverlay.classList.remove('flex');
                 }, 2600);
             });
 
             /* -----------------------------------------------------------
-               10. TAB VI: THE INSATIABLE RUNIC ALTAR
+               10. TAB IV: THE INSATIABLE RUNIC ALTAR
                    Periodic seepage from Nox, Silentii, Vitae; never reaches 100%
                ----------------------------------------------------------- */
             const altarCanvas = document.getElementById('altar-seep-canvas');
